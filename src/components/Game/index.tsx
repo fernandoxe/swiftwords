@@ -149,27 +149,27 @@ export const Game = () => {
     );
   };
 
-  const getEmojisBoard = (board: SquareI[][]) => {
-    const emojisBoard: string[][] = [];
-    console.log(board);
-    board.map(row => {
-      const emojisRow: string[] = [];
-      row.map(square => {
-        if(square.guessed === keyState.ERROR) {
-          // emojisRow.push('\u2B1C');
-          emojisRow.push('⬜');
-        } else if(square.guessed === keyState.ALMOST) {
-          // emojisRow.push('\u1F7E8');
-          emojisRow.push('🟨');
-        } else if(square.guessed === keyState.GUESSED) {
-          // emojisRow.push('\u1F7E9');
-          emojisRow.push('🟩');
-        }
-      });
-      emojisBoard.push(emojisRow);
-    });
-    return emojisBoard;
-  };
+  // const getEmojisBoard = (board: SquareI[][]) => {
+  //   const emojisBoard: string[][] = [];
+  //   console.log(board);
+  //   board.map(row => {
+  //     const emojisRow: string[] = [];
+  //     row.map(square => {
+  //       if(square.guessed === keyState.ERROR) {
+  //         // emojisRow.push('\u2B1C');
+  //         emojisRow.push('⬜');
+  //       } else if(square.guessed === keyState.ALMOST) {
+  //         // emojisRow.push('\u1F7E8');
+  //         emojisRow.push('🟨');
+  //       } else if(square.guessed === keyState.GUESSED) {
+  //         // emojisRow.push('\u1F7E9');
+  //         emojisRow.push('🟩');
+  //       }
+  //     });
+  //     emojisBoard.push(emojisRow);
+  //   });
+  //   return emojisBoard;
+  // };
 
   return (
     <>
