@@ -5,6 +5,8 @@ import { emptyKeyStates } from '../../constants';
 import { words } from '../../data';
 import { keyState, SquareI } from '../Board/Square';
 import { Modal } from '../Modal';
+import song from '../../img/icons/song.svg';
+import album from '../../img/icons/album.svg';
 
 const word = words[Math.floor(Math.random() * words.length)];
 const wordLength = word.word.length;
@@ -191,14 +193,11 @@ export const Game = () => {
             <div className="mb-4 text-center">
               {getMatchedText(word.line, word.word)}
             </div>
-            <div className="text-center">
-              {word.song}
+            <div className="flex items-center">
+              <img src={song} alt="song" className="w-5 mr-1" />{word.song}
             </div>
-            <div className="mb-4 text-center">
-              {word.album}
-            </div>
-            <div className="text-center">
-              Taylor Swift
+            <div className="flex items-center mb-4">
+              <img src={album} alt="album" className="w-5 mr-1" />{word.album}
             </div>
           </div>
         </Modal>
