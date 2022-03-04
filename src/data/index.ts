@@ -732,5 +732,5 @@ export const words = [
     line: 'It\'s so romantic (it\'s so romantic)',
     song: 'New Romantics',
     album: '1989',
-  },  
+  },
 ];

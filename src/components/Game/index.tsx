@@ -37,7 +37,7 @@ const insertNewRow = (board: SquareI[][], rowNumber: number, row: SquareI[]) => 
 };
 
 const isWinner = (row: SquareI[]) => {
-  return row.every((square, index) => square.char === word.word[index]);
+  return row.every((square, index) => square.char === word.word[index].toLowerCase());
 };
 
 export const Game = () => {
