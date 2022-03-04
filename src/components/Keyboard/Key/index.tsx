@@ -13,7 +13,6 @@ export interface KeyProps {
 }
 
 export const Key = (props: KeyProps) => {
-  console.log(props.char, props.state)
   const background = props.state === keyState.INITIAL ?
   'bg-slate-100 border-slate-200 mouse:hover:bg-slate-200 mouse:hover:border-slate-200':
   props.state === keyState.ERROR ?
