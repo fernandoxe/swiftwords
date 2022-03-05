@@ -1,4 +1,6 @@
-export const words = [
+import { Word } from '../components/Game';
+
+export const words: Word[] = [
   {
     word: 'lights',
     line: 'The lights are so bright but they never blind me, me',
