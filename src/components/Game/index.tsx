@@ -4,9 +4,7 @@ import { Keyboard } from '../Keyboard';
 import { emptyKeyStates } from '../../constants';
 import { words } from '../../data';
 import { keyState, SquareI } from '../Board/Square';
-import { Modal } from '../Modal';
-import song from '../../img/icons/song.svg';
-import album from '../../img/icons/album.svg';
+import { Result } from '../Result';
 
 const word = words[Math.floor(Math.random() * words.length)];
 const wordLength = word.word.length;
@@ -39,6 +37,13 @@ const insertNewRow = (board: SquareI[][], rowNumber: number, row: SquareI[]) => 
 const isWinner = (row: SquareI[]) => {
   return row.every((square, index) => square.char === word.word[index].toLowerCase());
 };
+
+export interface Word {
+  word: string;
+  line: string;
+  song: string;
+  album: string;
+}
 
 export const Game = () => {
   const [board, setBoard] = useState(getEmptyBoard());
@@ -137,20 +142,6 @@ export const Game = () => {
     setShowResult(false);
   };
 
-  const getMatchedText = (text: string, word: string) => {
-    const regexp = new RegExp(`\\b${word}\\b`, 'gi');
-    const words = text.split(regexp);
-    return (
-      <i>
-        {words.map((w, i) =>
-        <>
-          {w}{i !== words.length - 1 ? <strong className="font-normal text-purple-500">{word}</strong> : ''}
-        </>
-        )}
-      </i>
-    );
-  };
-
   // const getEmojisBoard = (board: SquareI[][]) => {
   //   const emojisBoard: string[][] = [];
   //   console.log(board);
@@ -185,22 +176,11 @@ export const Game = () => {
         deleteDisabled={deleteDisabled}
       />
       {showResult &&
-        <Modal onClose={handleResultClose}>
-          <div className="flex flex-col items-center">
-            <div className="mb-4 text-center">
-              You {winner ? 'win! ' : 'lost, '} the word was <span className="text-purple-500">{word.word}</span>
-            </div>
-            <div className="mb-4 text-center">
-              {getMatchedText(word.line, word.word)}
-            </div>
-            <div className="flex items-center">
-              <img src={song} alt="song" className="w-5 mr-1" />{word.song}
-            </div>
-            <div className="flex items-center mb-4">
-              <img src={album} alt="album" className="w-5 mr-1" />{word.album}
-            </div>
-          </div>
-        </Modal>
+        <Result
+          winner={winner}
+          word={word}
+          onClose={handleResultClose}
+        />
       }
     </>
   )
