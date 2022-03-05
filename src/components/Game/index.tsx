@@ -1,42 +1,10 @@
 import { useState } from 'react';
 import { Board } from '../Board';
 import { Keyboard } from '../Keyboard';
-import { emptyKeyStates } from '../../constants';
-import { words } from '../../data';
+import { emptyKeyStates, word, wordLength, rows } from '../../constants';
 import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
-
-const word = words[Math.floor(Math.random() * words.length)];
-const wordLength = word.word.length;
-const rows = wordLength + 1;
-
-const getEmptyBoard = () => {
-  const board: SquareI[][] = Array(rows).fill({})
-    .map((_row) =>
-      Array(wordLength).fill({})
-        .map(_square => ({char: '', guessed: keyState.INITIAL, border: false}))
-    );
-  board[0][0].border = true;
-  return board;
-};
-
-const copyBoard = (board: SquareI[][]) => board.map((row: SquareI[]) => row.map((o: SquareI) => ({...o})));
-
-const insertNewChar = (board: SquareI[][], row:number, square: number, char: SquareI) => {
-  const newBoard = copyBoard(board);
-  newBoard[row][square] = char;
-  return newBoard;
-};
-
-const insertNewRow = (board: SquareI[][], rowNumber: number, row: SquareI[]) => {
-  const newBoard = copyBoard(board);
-  newBoard[rowNumber] = row;
-  return newBoard;
-};
-
-const isWinner = (row: SquareI[]) => {
-  return row.every((square, index) => square.char === word.word[index].toLowerCase());
-};
+import { getEmptyBoard, insertNewChar, insertNewRow, isWinner } from '../../services';
 
 export interface Word {
   word: string;
@@ -46,7 +14,7 @@ export interface Word {
 }
 
 export const Game = () => {
-  const [board, setBoard] = useState(getEmptyBoard());
+  const [board, setBoard] = useState(getEmptyBoard(rows, wordLength));
   const [row, setRow] = useState(0);
   const [square, setSquare] = useState(0);
   const [enterDisabled, setEnterDisabled] = useState(true);
@@ -122,7 +90,7 @@ export const Game = () => {
     const newBoard = insertNewRow(board, row, coloredRow);
     
     const newRowNumber = row + 1;
-    const win = isWinner(newBoard[row]);
+    const win = isWinner(newBoard[row], word);
     if(win || newRowNumber === rows) { // is final row
       setBoard(newBoard);
       setTimeout(() => {
