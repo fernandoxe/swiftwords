@@ -1,4 +1,5 @@
 import { KeyStates } from '../components/Keyboard';
+import { words } from '../data';
 
 export const emptyKeyStates: KeyStates = {
   q: 0,
@@ -30,3 +31,7 @@ export const emptyKeyStates: KeyStates = {
   n: 0,
   m: 0,
 };
+
+export const word = words[Math.floor(Math.random() * words.length)];
+export const wordLength = word.word.length;
+export const rows = wordLength + 1;
