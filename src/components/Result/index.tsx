@@ -9,6 +9,7 @@ export interface ResultProps {
   winner: boolean;
   word: Word;
   emojisBoard: string[][];
+  attempts: number;
   onClose?: () => void;
 }
 
@@ -39,7 +40,7 @@ export const Result = (props: ResultProps) => {
   const handleShareClick = async () => {
     try {
       await navigator.share({
-        text: emojisBoardToString(),
+        text: `Swiftdle #1\n${props.emojisBoard.length}/${props.attempts}\n${emojisBoardToString()}\n`,
         title: process.env.REACT_APP_TITLE,
         url: process.env.REACT_APP_URL,
       });
