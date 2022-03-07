@@ -40,7 +40,7 @@ export const Result = (props: ResultProps) => {
   const handleShareClick = async () => {
     try {
       await navigator.share({
-        text: `Swiftdle #1\n${props.emojisBoard.length}/${props.attempts}\n${emojisBoardToString()}\n`,
+        text: `Swiftdle #1 - ${props.word.word.length} letters\n${props.emojisBoard.length}/${props.attempts} attempts\n${emojisBoardToString()}\n`,
         title: process.env.REACT_APP_TITLE,
         url: process.env.REACT_APP_URL,
       });
