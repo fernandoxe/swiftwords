@@ -28,3 +28,28 @@ export const insertNewRow = (board: SquareI[][], rowNumber: number, row: SquareI
 export const isWinner = (row: SquareI[], word: Word) => {
   return row.every((square, index) => square.char === word.word[index].toLowerCase());
 };
+
+export const getEmojisBoard = (board: SquareI[][]) => {
+    const emojisBoard: string[][] = [];
+ 
+    for (let i = 0; i < board.length; i++) {
+      const row = board[i];
+      const newRow = [];
+      for (let j = 0; j < row.length; j++) {
+        const square = row[j];
+        if(square.guessed === keyState.ERROR) {
+          // emojisRow.push('\u2B1C');
+          newRow.push('⬜');
+        } else if(square.guessed === keyState.ALMOST) {
+          // emojisRow.push('\u1F7E8');
+          newRow.push('🟨');
+        } else if(square.guessed === keyState.GUESSED) {
+          // emojisRow.push('\u1F7E9');
+          newRow.push('🟩');
+        }
+      }
+      newRow.length && emojisBoard.push(newRow);
+    }
+
+    return emojisBoard;
+  };
