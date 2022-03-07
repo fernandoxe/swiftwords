@@ -4,7 +4,7 @@ import { Keyboard } from '../Keyboard';
 import { emptyKeyStates, word, wordLength, rows } from '../../constants';
 import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
-import { getEmptyBoard, insertNewChar, insertNewRow, isWinner } from '../../services';
+import { getEmojisBoard, getEmptyBoard, insertNewChar, insertNewRow, isWinner } from '../../services';
 
 export interface Word {
   word: string;
@@ -110,28 +110,6 @@ export const Game = () => {
     setShowResult(false);
   };
 
-  // const getEmojisBoard = (board: SquareI[][]) => {
-  //   const emojisBoard: string[][] = [];
-  //   console.log(board);
-  //   board.map(row => {
-  //     const emojisRow: string[] = [];
-  //     row.map(square => {
-  //       if(square.guessed === keyState.ERROR) {
-  //         // emojisRow.push('\u2B1C');
-  //         emojisRow.push('⬜');
-  //       } else if(square.guessed === keyState.ALMOST) {
-  //         // emojisRow.push('\u1F7E8');
-  //         emojisRow.push('🟨');
-  //       } else if(square.guessed === keyState.GUESSED) {
-  //         // emojisRow.push('\u1F7E9');
-  //         emojisRow.push('🟩');
-  //       }
-  //     });
-  //     emojisBoard.push(emojisRow);
-  //   });
-  //   return emojisBoard;
-  // };
-
   return (
     <>
       <Board board={board} />
@@ -147,6 +125,7 @@ export const Game = () => {
         <Result
           winner={winner}
           word={word}
+          emojisBoard={getEmojisBoard(board)}
           onClose={handleResultClose}
         />
       }
