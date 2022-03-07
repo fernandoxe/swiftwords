@@ -125,6 +125,7 @@ export const Game = () => {
         <Result
           winner={winner}
           word={word}
+          attempts={rows}
           emojisBoard={getEmojisBoard(board)}
           onClose={handleResultClose}
         />
