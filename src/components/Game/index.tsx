@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { Board } from '../Board';
 import { Keyboard } from '../Keyboard';
-import { emptyKeyStates, word, wordLength, rows } from '../../constants';
+import { emptyKeyStates } from '../../constants';
 import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
-import { getEmojisBoard, getEmptyBoard, insertNewChar, insertNewRow, isWinner } from '../../services';
+import { getEmojisBoard, getEmptyBoard, getTodayWord, insertNewChar, insertNewRow, isWinner } from '../../services';
+
+const word = getTodayWord();
+const wordLength = word.word.length;
+const rows = wordLength + 1;
 
 export interface Word {
   word: string;
