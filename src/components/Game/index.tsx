@@ -4,7 +4,14 @@ import { Keyboard } from '../Keyboard';
 import { emptyKeyStates } from '../../constants';
 import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
-import { getEmojisBoard, getEmptyBoard, getTodayWord, insertNewChar, insertNewRow, isWinner } from '../../services';
+import {
+  getEmojisBoard,
+  getEmptyBoard,
+  getTodayWord,
+  insertNewChar,
+  insertNewRow,
+  isWinner
+} from '../../services';
 
 const word = getTodayWord();
 const wordLength = word.word.length;
