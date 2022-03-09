@@ -1,5 +1,7 @@
 import { KeyStates } from '../components/Keyboard';
-import { words } from '../data';
+
+export const firstDay = new Date(2022, 0, 1);
+export const dayMs = 60 * 60 * 24 * 1000;
 
 export const emptyKeyStates: KeyStates = {
   q: 0,
@@ -31,7 +33,3 @@ export const emptyKeyStates: KeyStates = {
   n: 0,
   m: 0,
 };
-
-export const word = words[Math.floor(Math.random() * words.length)];
-export const wordLength = word.word.length;
-export const rows = wordLength + 1;
