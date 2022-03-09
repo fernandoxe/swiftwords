@@ -22,7 +22,7 @@ export const Square = (props: SquareI) => {
 
   return (
     <div
-      className={`flex items-center justify-center uppercase ${props.border ? 'border-4 border-purple-700' : 'border-2 border-slate-300'} ${background} w-12 h-12 m-1 select-none`}
+      className={`flex items-center justify-center uppercase font-bold ${props.border ? 'border-4 border-purple-700' : 'border-2 border-slate-300'} ${background} w-12 h-12 m-1 select-none`}
     >
       {props.char}
     </div>
