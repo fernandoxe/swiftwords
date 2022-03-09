@@ -65,8 +65,8 @@ export const getDaysFromFirstDay = () => {
 };
 
 export const getTodayWord = () => {
-  // return words[Math.floor(Math.random() * words.length)];
-  const daysFromFirstDay = getDaysFromFirstDay();
-  return words[daysFromFirstDay % words.length];
+  return words[Math.floor(Math.random() * words.length)];
+  // const daysFromFirstDay = getDaysFromFirstDay();
+  // return words[daysFromFirstDay % words.length];
 };
 
