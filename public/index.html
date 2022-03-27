@@ -9,6 +9,19 @@
       gtag('js', new Date());
 
       gtag('config', '%REACT_APP_GTM_ID%');
+
+      window.onerror = (message) => {
+        console.log('onerror:', message);
+        gtag('send', 'exception', {
+          'exDescription': message,
+          'exFatal': false,
+        });
+        gtag('event', 'Global', {
+          'event_category' : 'Error',
+          'event_label' : message,
+          'non_interaction': true,
+        });
+      };
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,11 +45,11 @@
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <title>%REACT_APP_TITLE%</title>
   </head>
-  <body class="bg-slate-100 text-neutral-800 p-4 leading-5 font-['Open_Sans']">
+  <body class="bg-gray-100 text-neutral-800 leading-5 font-['Nunito']">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
