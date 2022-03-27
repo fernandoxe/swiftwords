@@ -1,9 +1,11 @@
 import { KeyStates } from '../components/Keyboard';
 
-export const firstDay = new Date(2022, 0, 1);
-export const dayMs = 60 * 60 * 24 * 1000;
+export const ATTEMPTS = 6;
 
-export const emptyKeyStates: KeyStates = {
+export const FIRST_DAY = new Date(2022, 0, 1);
+export const DAY_MS = 60 * 60 * 24 * 1000;
+
+export const EMPTY_KEYSTATES: KeyStates = {
   q: 0,
   w: 0,
   e: 0,
