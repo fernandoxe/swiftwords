@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import { Board } from '../Board';
 import { Keyboard } from '../Keyboard';
-import { emptyKeyStates } from '../../constants';
+import { EMPTY_KEYSTATES, ATTEMPTS } from '../../constants';
 import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
 import {
   getEmojisBoard,
   getEmptyBoard,
+  getLastGame,
+  getRandomWord,
   getTodayWord,
   insertNewChar,
   insertNewRow,
-  isWinner
+  isWinner,
+  saveGame,
 } from '../../services';
+import { Header } from '../Header';
+import { gtm } from '../../services/gtm';
 
-const word = getTodayWord();
-const wordLength = word.word.length;
-const rows = wordLength + 1;
+const rows = ATTEMPTS;
+const todayWord = getTodayWord();
 
 export interface Word {
   word: string;
@@ -25,27 +29,72 @@ export interface Word {
 }
 
 export const Game = () => {
-  const [board, setBoard] = useState(getEmptyBoard(rows, wordLength));
+  console.log('render game');
+  const [word, setWord] = useState(todayWord.word);
   const [row, setRow] = useState(0);
   const [square, setSquare] = useState(0);
   const [enterDisabled, setEnterDisabled] = useState(true);
   const [deleteDisabled, setDeleteDisabled] = useState(true);
-  const [keyStates, setKeyStates] = useState(emptyKeyStates);
+  const [keyStates, setKeyStates] = useState(EMPTY_KEYSTATES);
   const [showResult, setShowResult] = useState(false);
+  const [showResultButton, setShowResultButton] = useState(false);
   const [winner, setWinner] = useState(false);
+  const [gameFinished, setGameFinished] = useState(false);
+  const [isRandom, setIsRandom] = useState(false);
+
+  const resetStateForRandom = () => {
+    setRow(0);
+    setSquare(0);
+    setEnterDisabled(true);
+    setDeleteDisabled(true);
+    setKeyStates(EMPTY_KEYSTATES);
+    setShowResult(false);
+    setShowResultButton(false);
+    setGameFinished(false);
+  };
+  
+  const getInitBoard = (random?: boolean) => {
+    console.log('init board');
+    if(random) { // never when reload page
+      const randomWord = getRandomWord();
+      setWord(randomWord);
+      resetStateForRandom();
+      setIsRandom(true);
+      gtm.startGame(true);
+      return getEmptyBoard(randomWord.word.length);
+    } else { // always when reload page
+      const lastGame = getLastGame();
+      if(lastGame.board && todayWord.date === lastGame.date) { // last game exists and same date
+        setGameFinished(true);
+        setShowResult(true);
+        setShowResultButton(true);
+        setWord(lastGame.word);
+        setWinner(lastGame.winner);
+        setKeyStates(lastGame.keyStates);
+        gtm.showResult(lastGame.winner);
+        gtm.startAppLastGame(lastGame.word.word, lastGame.winner);
+        return lastGame.board;
+      } else { // firs time game or new date
+        gtm.startGame(false);
+        return getEmptyBoard(word.word.length);
+      }
+    }
+  };
+
+  const [board, setBoard] = useState(getInitBoard);
   
   const handleKeyClick = (char: string) => {
-    if(square === wordLength || row === rows) { // leave when row or board is full
+    if(square === word.word.length || row === rows) { // leave when row or board is full
       return;
     }
     const newSquare = square + 1;
     
-    if(newSquare === wordLength) { // enable enter when row is complete
+    if(newSquare === word.word.length) { // enable enter when row is complete
       setEnterDisabled(false);
     }
     
     const newBoard = insertNewChar(board, row, square, {char, guessed: keyState.INITIAL, border: false});
-    if(newSquare + 1 <= wordLength) { // set border to next square
+    if(newSquare + 1 <= word.word.length) { // set border to next square
       newBoard[row][square].border = false;
       newBoard[row][newSquare].border = true;
     }
@@ -63,7 +112,7 @@ export const Game = () => {
 
     const newBoard = insertNewChar(board, row, newSquare, {char: '', guessed: keyState.INITIAL, border: true});
     
-    if(square !== wordLength) {
+    if(square !== word.word.length) {
       newBoard[row][square].border = false;
     }
 
@@ -99,14 +148,21 @@ export const Game = () => {
     setDeleteDisabled(true);
 
     const newBoard = insertNewRow(board, row, coloredRow);
+
+    gtm.sendRow(row);
     
     const newRowNumber = row + 1;
     const win = isWinner(newBoard[row], word);
-    if(win || newRowNumber === rows) { // is final row
+    if(win || newRowNumber === rows) { // win or is final row
       setBoard(newBoard);
+      !isRandom && saveGame(newBoard, word, todayWord.date, win, newKeyStates); // save to localStorage
+      setWinner(win);
+      setGameFinished(true);
+      gtm.endGame(isRandom, word.word, win, newRowNumber);
       setTimeout(() => {
         setShowResult(true);
-        setWinner(win);
+        setShowResultButton(true);
+        gtm.showResult(win);
       }, 200);
     } else { // set border to first square in the next row
       newBoard[newRowNumber][0].border = true;
@@ -117,12 +173,26 @@ export const Game = () => {
 
   };
 
+  const handleResultOpen = () => {
+    gtm.clickResult(isRandom);
+    gtm.showResult(winner);
+    setShowResult(true);
+  };
+
   const handleResultClose = () => {
     setShowResult(false);
   };
 
+  const handleRandomClick = () => {
+    setBoard(getInitBoard(true));
+  };
+
   return (
-    <>
+    <div className="max-w-xl min-w-full">
+      <Header
+        showResultButton={showResultButton}
+        onResultClick={handleResultOpen}
+      />
       <Board board={board} />
       <Keyboard
         keyStates={keyStates}
@@ -131,16 +201,19 @@ export const Game = () => {
         onDeleteClick={handleDeleteClick}
         enterDisabled={enterDisabled}
         deleteDisabled={deleteDisabled}
+        keyBoardDisabled={gameFinished}
       />
       {showResult &&
         <Result
           winner={winner}
           word={word}
-          attempts={rows}
+          date={todayWord.date}
           emojisBoard={getEmojisBoard(board)}
+          random={isRandom}
           onClose={handleResultClose}
+          onRandom={handleRandomClick}
         />
       }
-    </>
+    </div>
   )
 };
