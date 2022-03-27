@@ -6,6 +6,7 @@ import { Modal } from '../Modal';
 import { useState } from 'react';
 import { Help } from '../Help';
 import { gtm } from '../../services/gtm';
+import { Chart } from '../Chart';
 
 export interface HeaderProps {
   showResultButton: boolean;
@@ -49,7 +50,7 @@ export const Header = (props: HeaderProps) => {
 
   return (
     <>
-      <div className="flex p-4">
+      <div className="flex p-4 select-none">
         <div className="text-2xl grow flex items-center leading-none font-bold">
           Swiftdle
         </div>
@@ -81,7 +82,7 @@ export const Header = (props: HeaderProps) => {
       }
       {showChart &&
         <Modal title="Charts" onClose={handleChartClose}>
-          Chart
+          <Chart />
         </Modal>
       }
       {showSettings &&
