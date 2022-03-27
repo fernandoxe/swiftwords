@@ -46,11 +46,15 @@ export interface KeyboardProps {
   enterDisabled: boolean;
   deleteDisabled: boolean;
   keyStates: KeyStates;
+  keyBoardDisabled: boolean;
 }
 
 export const Keyboard = (props: KeyboardProps) => {
 
   const handleKeyClick = (char: string) => {
+    if(props.keyBoardDisabled) {
+      return;
+    }
     if(char === 'enter') {
       props.onEnterClick();
       return;
@@ -75,6 +79,7 @@ export const Keyboard = (props: KeyboardProps) => {
         )}
       </div>
       <div className="flex justify-center">
+        <div className="flex grow-[0.5]"></div>
         {secondRow.map((char, index) =>
           <Key
             key={index}
@@ -83,6 +88,7 @@ export const Keyboard = (props: KeyboardProps) => {
             onClick={() => handleKeyClick(char)}
           />
         )}
+        <div className="flex grow-[0.5]"></div>
       </div>
       <div className="flex justify-center">
         <Key
