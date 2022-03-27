@@ -22,7 +22,7 @@ export const Key = (props: KeyProps) => {
   'bg-green-500 border-green-500 mouse:hover:bg-green-600 mouse:hover:border-green-600 ';
 
   const largeProps = props.large ?
-    'grow-[2] max-w-[4.8rem] bg-purple-300 border-purple-300 disabled:bg-purple-200 disabled:border-purple-200 disabled:text-slate-400 disabled:shadow-none mouse:hover:bg-purple-400 mouse:hover:border-purple-400 hover:disabled:bg-purple-200 hover:disabled:border-purple-200' :
+    'grow-[2] max-w-[4.7rem] bg-purple-300 border-purple-300 disabled:bg-purple-200 disabled:border-purple-200 disabled:text-slate-400 disabled:shadow-none mouse:hover:bg-purple-400 mouse:hover:border-purple-400 hover:disabled:bg-purple-200 hover:disabled:border-purple-200' :
     '';
 
   const additionalProps = props.large ? largeProps : background;
