@@ -22,7 +22,7 @@ export const Modal:FC<ModalProps> = (props) => {
             <div className="font-bold text-lg">
               {props.title}
             </div>
-            <button onClick={() => handleClick(true)} className="[-webkit-tap-highlight-color:transparent] outline-none">
+            <button onClick={() => handleClick(true)} className="[-webkit-tap-highlight-color:transparent] select-none">
               <img src={close} alt="close" />
             </button>
           </div>
