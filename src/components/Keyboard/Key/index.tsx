@@ -27,9 +27,11 @@ export const Key = (props: KeyProps) => {
 
   const additionalProps = props.large ? largeProps : background;
 
+  const disabled = !props.disabled ? 'active:scale-90 duration-150' : '';
+
   return (
     <button
-      className={`flex grow items-center justify-center basis-0 h-12 max-w-[3rem] m-1 uppercase border ${additionalProps} [-webkit-tap-highlight-color:transparent] overflow-hidden shadow-md active:scale-90 duration-150 select-none`}
+      className={`flex grow items-center justify-center basis-0 h-12 max-w-[3rem] m-1 uppercase border ${additionalProps} [-webkit-tap-highlight-color:transparent] overflow-hidden shadow-md ${disabled} select-none`}
       disabled={props.disabled}
       onClick={props.onClick}
     >
