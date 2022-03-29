@@ -35,3 +35,38 @@ export const EMPTY_KEYSTATES: KeyStates = {
   n: 0,
   m: 0,
 };
+
+export const FIRST_ROW = [
+  'q',
+  'w',
+  'e',
+  'r',
+  't',
+  'y',
+  'u',
+  'i',
+  'o',
+  'p',
+];
+
+export const SECOND_ROW = [
+  'a',
+  's',
+  'd',
+  'f',
+  'g',
+  'h',
+  'j',
+  'k',
+  'l',
+];
+
+export const THIRD_ROW = [
+  'z',
+  'x',
+  'c',
+  'v',
+  'b',
+  'n',
+  'm',
+];
