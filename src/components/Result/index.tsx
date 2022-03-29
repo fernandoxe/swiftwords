@@ -64,7 +64,7 @@ export const Result = (props: ResultProps) => {
       text += `🎼 ${props.word.song}\n`;
       text += `💿 ${props.word.album}\n\n`;
     }
-    text += `${emojisBoardToString()}\n\n`;
+    text += `${emojisBoardToString()}\n\n${process.env.REACT_APP_SHORT_URL}`;
     return text;
   };
 
@@ -74,7 +74,7 @@ export const Result = (props: ResultProps) => {
       await navigator.share({
         text: `${getShareText(props.random)}`,
         title: process.env.REACT_APP_TITLE,
-        url: process.env.REACT_APP_URL,
+        // url: process.env.REACT_APP_URL,
       });
       console.log('Share successful');
     } catch (error: any) {
@@ -86,7 +86,7 @@ export const Result = (props: ResultProps) => {
   const handleCopyClick = async () => {
     gtm.copy(props.random, props.winner);
     try {
-      await navigator.clipboard.writeText(`${getShareText(props.random)}${process.env.REACT_APP_URL}`);
+      await navigator.clipboard.writeText(`${getShareText(props.random)}`);
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
