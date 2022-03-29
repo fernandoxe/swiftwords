@@ -1,4 +1,5 @@
 import { keyState, SquareI } from '../components/Board/Square';
+import { ChartsProps } from '../components/Charts';
 import { Word } from '../components/Game';
 import { KeyStates } from '../components/Keyboard';
 import { ATTEMPTS, DAY_MS, FIRST_DAY } from '../constants';
@@ -16,38 +17,12 @@ export const getEmptyBoard = (wordLength: number) => {
   return board;
 };
 
-export const getLastGame = () => {
-  try {
-    const savedGame = localStorage.getItem('game') || '{}';
-    const lastGame = JSON.parse(savedGame);
-    return lastGame;
-  } catch (error: any) {
-    return {};
-  }
-};
-
 // interface LastGame {
 //   board: SquareI[][];
 //   word: string;
 //   date: string, // AAAA-MM-DD
 //   winner: boolean,
 // }
-
-const getBoardFromSavedGame = (board: SquareI[][]) => {
-  return board.map(row => row.map(square => ({...square, border: false})));
-};
-
-export const getInitialBoard = (word: Word) => {
-  const wordLength = word.word.length;
-  try {
-    const lastGame = JSON.parse(getLastGame());
-    if(lastGame.board) {
-      return getBoardFromSavedGame(lastGame);
-    }
-  } catch (error: any) {
-    return getEmptyBoard(wordLength);
-  }
-};
 
 export const copyBoard = (board: SquareI[][]) => board.map((row: SquareI[]) => row.map((o: SquareI) => ({...o})));
 
@@ -130,6 +105,34 @@ const getBoardForSave = (board: SquareI[][]) => {
   return board.map(row => row.map(square => ({char: square.char, guessed: square.guessed})));
 };
 
+export const getFromLocalStorage = (key: string) => {
+  try {
+    const savedValue = localStorage.getItem(key) || '{}';
+    const value = JSON.parse(savedValue);
+    return value;
+  } catch (error: any) {
+    return {};
+  }
+};
+
+export const getLastGame = () => getFromLocalStorage('lastGame');
+
+export const getCharts = () => {
+  let savedCharts = getFromLocalStorage('stats');
+  if(!savedCharts.total) { // 0 games played
+    savedCharts = {
+      total: 0,
+      normal: 0,
+      random: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      winner: 0,
+      byRow: Array(ATTEMPTS).fill(0),
+    };
+  }
+  return savedCharts;
+}
+
 export const saveGame = (board: SquareI[][], word: Word, date: string, winner: boolean, keyStates: KeyStates) => {
   const newBoard = getBoardForSave(board);
   const game = {
@@ -140,6 +143,27 @@ export const saveGame = (board: SquareI[][], word: Word, date: string, winner: b
     keyStates
   };
   const gameJson = JSON.stringify(game);
-  // console.log(gameJson);
-  localStorage.setItem('game', gameJson);
+  localStorage.setItem('lastGame', gameJson);
 };
+
+export const saveCharts = (charts: ChartsProps, isRandom: boolean, winner: boolean, row: number) => {
+  const newCharts = {
+    ...charts,
+    byRow: [...charts.byRow],
+  };
+  newCharts.total = newCharts.total + 1;
+  newCharts.normal = !isRandom ? newCharts.normal + 1 : newCharts.normal;
+  newCharts.random = isRandom ? newCharts.random + 1 : newCharts.random;
+  newCharts.currentStreak = winner ? newCharts.currentStreak + 1 : 0;
+  newCharts.bestStreak = newCharts.currentStreak > newCharts.bestStreak ? newCharts.currentStreak : newCharts.bestStreak;
+  newCharts.winner = winner ? newCharts.winner + 1 : newCharts.winner;
+  newCharts.byRow[row] = winner ? newCharts.byRow[row] + 1 : newCharts.byRow[row];
+
+  const chartsJson = JSON.stringify(newCharts);
+
+  localStorage.setItem('stats', chartsJson);
+
+  return newCharts;
+};
+
+export const percent = (value: number, total: number) => `${total ? value*100/total : '0'}%`;
