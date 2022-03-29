@@ -1,4 +1,4 @@
-// import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FIRST_ROW, SECOND_ROW, THIRD_ROW } from '../../constants';
 import { Key } from './Key';
 
@@ -16,59 +16,54 @@ export interface KeyboardProps {
   keyBoardDisabled: boolean;
 }
 
-export const Keyboard = (props: KeyboardProps) => {
+export const Keyboard = ({
+  onKeyClick,
+  onEnterClick,
+  onDeleteClick,
+  enterDisabled,
+  deleteDisabled,
+  keyStates,
+  keyBoardDisabled,
+}: KeyboardProps) => {
 
-  // const handle = useCallback((char: string) => {
-  //   console.log('render usecallback');
-  //   if(props.keyBoardDisabled) {
-  //     return;
-  //   }
-  //   if(char === 'enter') {
-  //     props.onEnterClick();
-  //     return;
-  //   }
-  //   if(char === 'delete') {
-  //     props.onDeleteClick();
-  //     return;
-  //   }
-  //   props.onKeyClick(char);
-  // }, [props]);
-
-  const handleKeyClick = (char: string) => {
-    if(props.keyBoardDisabled) {
+  const handleKeyClick = useCallback((char: string) => {
+    if(keyBoardDisabled) {
       return;
     }
     if(char === 'enter') {
-      props.onEnterClick();
+      onEnterClick();
       return;
     }
     if(char === 'delete') {
-      props.onDeleteClick();
+      onDeleteClick();
       return;
     }
-    props.onKeyClick(char);
-  };
+    onKeyClick(char);
+  }, [keyBoardDisabled, onDeleteClick, onEnterClick, onKeyClick]);
 
-  // useEffect(() => {
-  //   const keyup = (e: KeyboardEvent) => {
-  //     if(e.key === 'Enter') {
-  //       console.log('key enter', e.key);
-  //       handle('enter');
-  //     } else if(e.key === 'Backspace') {
-  //       console.log('key delete', e.key);
-  //       handle('delete');
-  //     } else if(e.key.length === 1 && e.key.toLowerCase() >= 'a' && e.key.toLowerCase() <= 'z') {
-  //       console.log('key char', e.key);
-  //       handle(e.key);
-  //     }
-  //   };
+  useEffect(() => {
+    const keyup = (e: KeyboardEvent) => {
+      // console.log('key', e.key)
+      if(e.key === 'Enter' && !enterDisabled) {
+        // console.log('key enter', e.key);
+        handleKeyClick('enter');
+      } else if(e.key === 'Backspace' && !deleteDisabled) {
+        // console.log('key delete', e.key);
+        handleKeyClick('delete');
+      } else if(e.key.length === 1 && e.key.toLowerCase() >= 'a' && e.key.toLowerCase() <= 'z') {
+        // console.log('key char', e.key);
+        handleKeyClick(e.key);
+      }
+    };
 
-  //   document.addEventListener('keyup', keyup);
+    document.addEventListener('keyup', keyup);
+    console.log('add keyup');
 
-  //   return () => {
-  //     document.removeEventListener('keyup', keyup);
-  //   };
-  // }, [handle]);
+    return () => {
+      document.removeEventListener('keyup', keyup);
+      console.log('remove keyup');
+    };
+  }, [handleKeyClick, enterDisabled, deleteDisabled]);
 
   return (
     <div>
@@ -77,7 +72,7 @@ export const Keyboard = (props: KeyboardProps) => {
           <Key
             key={index}
             char={char}
-            state={props.keyStates[char]}
+            state={keyStates[char]}
             onClick={() => handleKeyClick(char)}
           />
         )}
@@ -88,7 +83,7 @@ export const Keyboard = (props: KeyboardProps) => {
           <Key
             key={index}
             char={char}
-            state={props.keyStates[char]}
+            state={keyStates[char]}
             onClick={() => handleKeyClick(char)}
           />
         )}
@@ -99,21 +94,21 @@ export const Keyboard = (props: KeyboardProps) => {
           char="enter"
           large
           state={0}
-          disabled={props.enterDisabled}
+          disabled={enterDisabled}
           onClick={() => handleKeyClick('enter')}
         />
         {THIRD_ROW.map((char, index) =>
           <Key
             key={index}
             char={char}
-            state={props.keyStates[char]}
+            state={keyStates[char]}
             onClick={() => handleKeyClick(char)}
           />
         )}
         <Key
           char="delete"
           large
-          disabled={props.deleteDisabled}
+          disabled={deleteDisabled}
           state={0}
           onClick={() => handleKeyClick('delete')}
         />
