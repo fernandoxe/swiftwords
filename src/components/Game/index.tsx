@@ -5,6 +5,7 @@ import { EMPTY_KEYSTATES, ATTEMPTS } from '../../constants';
 import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
 import {
+  getCharts,
   getEmojisBoard,
   getEmptyBoard,
   getLastGame,
@@ -13,6 +14,7 @@ import {
   insertNewChar,
   insertNewRow,
   isWinner,
+  saveCharts,
   saveGame,
 } from '../../services';
 import { Header } from '../Header';
@@ -41,6 +43,7 @@ export const Game = () => {
   const [winner, setWinner] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
+  const [charts, setCharts] = useState(getCharts);
 
   const resetStateForRandom = () => {
     setRow(0);
@@ -74,7 +77,7 @@ export const Game = () => {
         gtm.showResult(lastGame.winner);
         gtm.startAppLastGame(lastGame.word.word, lastGame.winner);
         return lastGame.board;
-      } else { // firs time game or new date
+      } else { // first time game or new date
         gtm.startGame(false);
         return getEmptyBoard(word.word.length);
       }
@@ -155,7 +158,8 @@ export const Game = () => {
     const win = isWinner(newBoard[row], word);
     if(win || newRowNumber === rows) { // win or is final row
       setBoard(newBoard);
-      !isRandom && saveGame(newBoard, word, todayWord.date, win, newKeyStates); // save to localStorage
+      !isRandom && saveGame(newBoard, word, todayWord.date, win, newKeyStates); // save game to localStorage
+      setCharts(saveCharts(charts, isRandom, win, row)); // save charts to localStorage
       setWinner(win);
       setGameFinished(true);
       gtm.endGame(isRandom, word.word, win, newRowNumber);
@@ -191,6 +195,7 @@ export const Game = () => {
     <div className="max-w-xl min-w-full">
       <Header
         showResultButton={showResultButton}
+        charts={charts}
         onResultClick={handleResultOpen}
       />
       <Board board={board} />
