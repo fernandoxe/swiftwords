@@ -23,6 +23,18 @@
         });
       };
     </script>
+    <script>
+      const theme = window.localStorage.getItem('theme');
+      if(theme === 'dark' || theme === 'light') {
+        document.documentElement.classList.add(theme);
+      } else if(window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        window.localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.add('light');
+        window.localStorage.setItem('theme', 'light');
+      }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -49,7 +61,7 @@
 
     <title>%REACT_APP_TITLE%</title>
   </head>
-  <body class="bg-gray-100 text-neutral-800 leading-5 font-['Nunito']">
+  <body class="bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text leading-5 font-['Nunito']">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
