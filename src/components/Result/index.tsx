@@ -1,12 +1,12 @@
 import { Word } from '../Game';
 import { Modal } from '../Modal';
-import song from '../../img/icons/song.svg';
-import album from '../../img/icons/album.svg';
-import share from '../../img/icons/share.svg';
-import copy from '../../img/icons/copy.svg';
-import repeat from '../../img/icons/repeat.svg';
-import check from '../../img/icons/check.svg';
-import nocheck from '../../img/icons/nocheck.svg';
+import { ReactComponent as SongIcon } from '../../img/icons/song.svg';
+import { ReactComponent as AlbumIcon } from '../../img/icons/album.svg';
+import { ReactComponent as ShareIcon } from '../../img/icons/share.svg';
+import { ReactComponent as CopyIcon } from '../../img/icons/copy.svg';
+import { ReactComponent as RepeatIcon } from '../../img/icons/repeat.svg';
+import { ReactComponent as CheckIcon } from '../../img/icons/check.svg';
+import { ReactComponent as NocheckIcon } from '../../img/icons/nocheck.svg';
 import { Fragment, useState } from 'react';
 import { canShare } from '../../services';
 import { Snackbar } from '../Snackbar';
@@ -36,7 +36,7 @@ export const Result = (props: ResultProps) => {
     return (
       words.map((w, i) =>
       <Fragment key={i}>
-        {w}{i !== words.length - 1 ? <strong className="font-normal text-purple-500">{word}</strong> : ''}
+        {w}{i !== words.length - 1 ? <strong className="font-normal text-light-primary-600 dark:text-dark-primary-400">{word}</strong> : ''}
       </Fragment>
       )
     );
@@ -109,11 +109,18 @@ export const Result = (props: ResultProps) => {
       onClose={handleResultClose}
     >
       <div className="flex flex-col items-center">
-        <div className="mb-1 text-center">
-          <img className="w-8" src={props.winner ? check : nocheck} alt={props.winner ? 'Guessed' : 'Not guessed'} />
-        </div>
+          {props.winner &&
+          <div className="mb-1 w-8 text-light-success-500 dark:text-dark-success-600">
+            <CheckIcon />
+          </div>
+          }
+          {!props.winner &&
+            <div className="mb-1 w-8 text-red-600 dark:text-red-700">
+              <NocheckIcon />
+            </div>
+          }
         <div className="text-sm mb-4 text-center">
-          The word was <span className="text-purple-500">{props.word.word}</span>
+          The word was <span className="text-light-primary-600 dark:text-dark-primary-400">{props.word.word}</span>
         </div>
         <div className="mb-1 text-center">
           <i>
@@ -121,15 +128,23 @@ export const Result = (props: ResultProps) => {
           </i>
         </div>
         <div className="text-sm flex items-center mb-1">
-          <img src={song} alt="song" className="w-[1.125rem] mr-1" />{props.word.song}
+          <div className="w-[1.125rem] mr-1">
+            <SongIcon />
+          </div>
+          {props.word.song}
         </div>
         <div className="text-sm flex items-center mb-4">
-          <img src={album} alt="album" className="w-[1.125rem] mr-1" />{props.word.album}
+          <div className="w-[1.125rem] mr-1">
+            <AlbumIcon />
+          </div>
+          {props.word.album}
         </div>
         {canShare() &&
           <Button onClick={handleShareClick}>
             <span className="text-sm">Share result</span>
-            <img src={share} alt="Share" className="w-5 ml-1" />
+            <div className="w-5 ml-1">
+              <ShareIcon />
+            </div>
           </Button>
         }
         {/* {!canShare && canCopy && */}
@@ -137,7 +152,9 @@ export const Result = (props: ResultProps) => {
             onClick={handleCopyClick}
           >
             <span className="text-sm">Copy result</span>
-            <img src={copy} alt="Copy" className="w-5 ml-1" />
+            <div className="w-5 ml-1">
+              <CopyIcon />
+            </div>
           </Button>
         {/* } */}
         <div className="text-sm text-center mb-4">
@@ -148,7 +165,9 @@ export const Result = (props: ResultProps) => {
           onClick={handleRandomClick}
         >
           <span className="text-sm">Try a random {process.env.REACT_APP_TITLE}</span>
-          <img src={repeat} alt="Random word" className="w-5 ml-1" />
+          <div className="w-5 ml-1">
+            <RepeatIcon />
+          </div>
         </Button>
       </div>
       {copied &&

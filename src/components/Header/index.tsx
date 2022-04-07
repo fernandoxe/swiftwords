@@ -1,12 +1,12 @@
-import help from '../../img/icons/help.svg';
-import chart from '../../img/icons/chart.svg';
-import grid from '../../img/icons/grid.svg';
-// import settings from '../../img/icons/settings.svg';
 import { Modal } from '../Modal';
 import { useState } from 'react';
 import { Help } from '../Help';
 import { gtm } from '../../services/gtm';
 import { Charts, ChartsProps } from '../Charts';
+import { ReactComponent as ResultIcon } from '../../img/icons/grid.svg';
+import { ReactComponent as ChartIcon } from '../../img/icons/chart.svg';
+import { ReactComponent as HelpIcon } from '../../img/icons/help.svg';
+// import { ReactComponent as SettingsIcon } from '../../img/icons/settings.svg';
 
 export interface HeaderProps {
   showResultButton: boolean;
@@ -57,27 +57,31 @@ export const Header = (props: HeaderProps) => {
         </div>
         {props.showResultButton &&
           <button
+            className="ml-1 w-6"
             onClick={handleResultClick}
           >
-            <img src={grid} alt="Result" />
+            <ResultIcon />
           </button>
         }
         {props.charts.total > 0 &&
           <button
-            className="ml-1"
+            className="ml-1 w-6"
             onClick={handleChartClick}
           >
-            <img src={chart} alt="Statistics" />
+            <ChartIcon />
           </button>
         }
         <button
-          className="ml-1"
+          className="ml-1 w-6"
           onClick={handleHelpClick}
         >
-          <img src={help} alt="Help" />
+          <HelpIcon />
         </button>
-        {/* <button onClick={handleSettingsClick}>
-          <img src={settings} alt="Settings" />
+        {/* <button
+          className="ml-1 w-6"
+          onClick={handleSettingsClick}
+        >
+          <SettingsIcon />
         </button> */}
       </div>
       {showHelp &&

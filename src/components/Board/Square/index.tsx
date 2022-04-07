@@ -13,16 +13,16 @@ export interface SquareI {
 
 export const Square = (props: SquareI) => {
   const background = props.guessed === keyState.INITIAL ?
-    '':
+    `bg-light-background dark:bg-dark-background ${props.border ? 'border-light-primary-700 dark:border-dark-primary-700' : 'border-light-border dark:border-dark-border'}`:
     props.guessed === keyState.ERROR ?
-    'bg-slate-300 border-slate-300' :
+    'bg-light-error-300 dark:bg-dark-error-700 border-light-error-300 dark:border-dark-error-700' :
     props.guessed === keyState.ALMOST ?
-    'bg-yellow-300 border-yellow-300' :
-    'bg-green-500 border-green-500';
+    'bg-light-warning-300 dark:bg-dark-warning-400 border-light-warning-300 dark:border-dark-warning-400 dark:text-dark-contrast' :
+    'bg-light-success-500 dark:bg-dark-success-600 border-light-success-500 dark:border-dark-success-600 dark:text-dark-contrast';
 
   return (
     <div
-      className={`flex items-center justify-center uppercase font-bold border-2 ${props.border ? 'border-purple-700' : 'border-slate-300'} ${background} w-12 h-12 m-1 select-none`}
+      className={`flex items-center justify-center uppercase font-bold border-2 ${background} w-12 h-12 m-1 select-none`}
     >
       {props.char}
     </div>

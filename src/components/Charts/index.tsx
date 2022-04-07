@@ -38,8 +38,8 @@ export const Charts = (props: ChartsProps) => {
       <div className="font-bold text-sm mb-1">
         Games won
       </div>
-      <div className="relative flex grow border-l border-l-purple-300 mb-4">
-        <div className={`h-4 bg-purple-300`} style={{width: gamesWon}}>
+      <div className="relative flex grow mb-4">
+        <div className={`h-4 border-l border-l-light-primary-300 dark:border-l-dark-primary-700 bg-light-primary-300 dark:bg-dark-primary-700`} style={{width: gamesWon}}>
         </div>
         <div className="absolute right-0 mr-1 text-xs font-bold">
           {props.winner}
@@ -53,8 +53,8 @@ export const Charts = (props: ChartsProps) => {
           <div className="text-sm w-3.5 leading-none">
             {index + 1}
           </div>
-          <div className="relative flex grow border-l border-l-purple-300">
-            <div className="h-4 bg-purple-300" style={{width: row.width}}>
+          <div className="relative flex grow">
+            <div className="h-4  border-l border-l-light-primary-300 dark:border-l-dark-primary-700 bg-light-primary-300 dark:bg-dark-primary-700" style={{width: row.width}}>
             </div>
             <div className="absolute right-0 mr-1 text-xs font-bold">
               {row.winner}
