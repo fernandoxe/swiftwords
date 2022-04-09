@@ -106,7 +106,7 @@ export const Help = (props: HelpProps) => {
         <div className="mb-2">
           In the next tries use the previous hints to guess the word
         </div>
-        <div className="mb-2">
+        <div>
           <Row row={secondExample} />
         </div>
       </div>
