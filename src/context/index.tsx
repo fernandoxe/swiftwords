@@ -11,7 +11,7 @@ export interface ContextI {
 
 export const value: ContextI = {
   state: {
-    highContrast: !!window.localStorage.getItem('highContrast'),
+    highContrast: !!Number(window.localStorage.getItem('highContrast')),
   },
   setState: () => {},
 };
