@@ -82,7 +82,7 @@ export const Help = (props: HelpProps) => {
       title="How to play"
       onClose={handleClose}
     >
-      <div className="text-sm">
+      <div>
         <div className="mb-2">
           Complete the row and press enter
         </div>
