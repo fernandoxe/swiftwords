@@ -15,6 +15,8 @@ module.exports = {
           success: colors.green,
           warning: colors.yellow,
           error: colors.slate,
+          successhigh: colors.blue,
+          warninghigh: colors.orange,
           disabled: colors.slate,
         },
         dark: {
@@ -26,6 +28,8 @@ module.exports = {
           success: colors.green,
           warning: colors.yellow,
           error: colors.slate,
+          successhigh: colors.blue,
+          warninghigh: colors.orange,
           disabled: colors.slate,
         },
       },
