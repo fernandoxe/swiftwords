@@ -6,7 +6,8 @@ import { Charts, ChartsProps } from '../Charts';
 import { ReactComponent as ResultIcon } from '../../img/icons/grid.svg';
 import { ReactComponent as ChartIcon } from '../../img/icons/chart.svg';
 import { ReactComponent as HelpIcon } from '../../img/icons/help.svg';
-// import { ReactComponent as SettingsIcon } from '../../img/icons/settings.svg';
+import { ReactComponent as SettingsIcon } from '../../img/icons/settings.svg';
+import { Settings } from '../Settings';
 
 export interface HeaderProps {
   showResultButton: boolean;
@@ -33,9 +34,9 @@ export const Header = (props: HeaderProps) => {
     props.onResultClick();
   };
 
-  // const handleSettingsClick = () => {
-  //   setShowSettings(true);
-  // };
+  const handleSettingsClick = () => {
+    setShowSettings(true);
+  };
 
   const handleHelpClose = () => {
     setShowHelp(false);
@@ -77,12 +78,12 @@ export const Header = (props: HeaderProps) => {
         >
           <HelpIcon />
         </button>
-        {/* <button
+        <button
           className="ml-1 w-6"
           onClick={handleSettingsClick}
         >
           <SettingsIcon />
-        </button> */}
+        </button>
       </div>
       {showHelp &&
         <Help onClose={handleHelpClose} />
@@ -102,6 +103,7 @@ export const Header = (props: HeaderProps) => {
       }
       {showSettings &&
         <Modal title="Settings" onClose={handleSettingsClose}>
+          <Settings />
         </Modal>
       }
     </>
