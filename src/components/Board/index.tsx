@@ -8,7 +8,7 @@ export interface BoardProps {
 export const Board = (props: BoardProps) => {
 
   return (
-    <div className="mb-8">
+    <div className="mb-7">
       {props.board.map((row, index) =>
         <Row key={index} row={row} />
       )}

@@ -54,11 +54,11 @@ export const Header = (props: HeaderProps) => {
     <>
       <div className="flex p-4 select-none">
         <div className="text-2xl grow flex items-center leading-none font-bold">
-          Swiftdle
+          {process.env.REACT_APP_TITLE}
         </div>
         {props.showResultButton &&
           <button
-            className="ml-1 w-6"
+            className="w-7 active:scale-90 duration-150"
             onClick={handleResultClick}
           >
             <ResultIcon />
@@ -66,20 +66,20 @@ export const Header = (props: HeaderProps) => {
         }
         {props.charts.total > 0 &&
           <button
-            className="ml-1 w-6"
+            className="ml-2 w-7 active:scale-90 duration-150"
             onClick={handleChartClick}
           >
             <ChartIcon />
           </button>
         }
         <button
-          className="ml-1 w-6"
+          className="ml-2 w-7 active:scale-90 duration-150"
           onClick={handleHelpClick}
         >
           <HelpIcon />
         </button>
         <button
-          className="ml-1 w-6"
+          className="ml-2 w-7 active:scale-90 duration-150"
           onClick={handleSettingsClick}
         >
           <SettingsIcon />

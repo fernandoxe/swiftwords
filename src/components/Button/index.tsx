@@ -16,7 +16,7 @@ export const Button: FC<ButtonProps> = (props) => {
 
   return (
     <button
-      className={`flex items-center ${border} shadow-md active:scale-90 duration-150 select-none rounded mb-4`}
+      className={`flex items-center ${border} shadow-md active:scale-90 duration-150 select-none rounded`}
       onClick={handleClick}
     >
       {props.children}

@@ -110,61 +110,65 @@ export const Result = (props: ResultProps) => {
     >
       <div className="flex flex-col items-center">
           {props.winner &&
-          <div className="mb-1 w-8 text-light-success-500 dark:text-dark-success-600">
+          <div className="mb-2 w-11 text-light-success-500 dark:text-dark-success-600">
             <CheckIcon />
           </div>
           }
           {!props.winner &&
-            <div className="mb-1 w-8 text-red-600 dark:text-red-700">
+            <div className="mb-2 w-11 text-red-600 dark:text-red-700">
               <NocheckIcon />
             </div>
           }
-        <div className="text-sm mb-4 text-center">
+        <div className="mb-5 text-center">
           The word was <span className="text-light-primary-600 dark:text-dark-primary-400">{props.word.word}</span>
         </div>
-        <div className="mb-1 text-center">
+        <div className="text-lg leading-none mb-1 text-center">
           <i>
             {getMatchedText(props.word.line, props.word.word)}
           </i>
         </div>
-        <div className="text-sm flex items-center mb-1">
-          <div className="w-[1.125rem] mr-1">
+        <div className="flex items-center mb-1">
+          <div className="w-5 mr-1">
             <SongIcon />
           </div>
           {props.word.song}
         </div>
-        <div className="text-sm flex items-center mb-4">
-          <div className="w-[1.125rem] mr-1">
+        <div className="flex items-center mb-5">
+          <div className="w-5 mr-1">
             <AlbumIcon />
           </div>
           {props.word.album}
         </div>
         {canShare() &&
+        <div className="mb-3">
           <Button onClick={handleShareClick}>
-            <span className="text-sm">Share result</span>
+            <span>Share result</span>
             <div className="w-5 ml-1">
               <ShareIcon />
             </div>
           </Button>
+        </div>
         }
         {/* {!canShare && canCopy && */}
-          <Button
-            onClick={handleCopyClick}
-          >
-            <span className="text-sm">Copy result</span>
-            <div className="w-5 ml-1">
-              <CopyIcon />
-            </div>
-          </Button>
+          <div className="mb-5">
+            <Button
+              onClick={handleCopyClick}
+            >
+              <span>Copy result</span>
+              <div className="w-5 ml-1">
+                <CopyIcon />
+              </div>
+            </Button>
+          </div>
         {/* } */}
-        <div className="text-sm text-center mb-4">
+        <div className="text-center mb-3">
           Come back tomorrow for a new {process.env.REACT_APP_TITLE} of the day
         </div>
         <Button
           bordered
           onClick={handleRandomClick}
         >
-          <span className="text-sm">Try a random {process.env.REACT_APP_TITLE}</span>
+          <span>Try a random {process.env.REACT_APP_TITLE}</span>
           <div className="w-5 ml-1">
             <RepeatIcon />
           </div>
