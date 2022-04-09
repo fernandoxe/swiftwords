@@ -49,7 +49,7 @@ export const Charts = (props: ChartsProps) => {
         Games won by row
       </div>
       {wonByRow.map((row, index) =>
-        <div key={index} className="flex items-center mb-1">
+        <div key={index} className="flex items-center mb-1 last:mb-0">
           <div className="text-sm w-3.5 leading-none">
             {index + 1}
           </div>
