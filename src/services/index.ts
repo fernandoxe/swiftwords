@@ -61,7 +61,7 @@ export const getEmojisBoard = (board: SquareI[][]) => {
 
 export const getRandomWord = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/swiftdle/random`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/random`);
     if(!response.ok) {
       throw Error(`Status ${response.status}`);
     };
@@ -76,7 +76,7 @@ export const getRandomWord = async () => {
 
 export const getTodayWord = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/swiftdle`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}`);
     if(!response.ok) {
       throw Error(`Status ${response.status}`);
     };
