@@ -2,8 +2,7 @@ import { keyState, SquareI } from '../components/Board/Square';
 import { ChartsProps } from '../components/Charts';
 import { Word } from '../components/Game';
 import { KeyStates } from '../components/Keyboard';
-import { ATTEMPTS, DAY_MS, FIRST_DAY } from '../constants';
-import { words } from '../data';
+import { ATTEMPTS } from '../constants';
 import { gtm } from './gtm';
 
 export const getEmptyBoard = (wordLength: number) => {
@@ -16,13 +15,6 @@ export const getEmptyBoard = (wordLength: number) => {
   board[0][0].border = true;
   return board;
 };
-
-// interface LastGame {
-//   board: SquareI[][];
-//   word: string;
-//   date: string, // AAAA-MM-DD
-//   winner: boolean,
-// }
 
 export const copyBoard = (board: SquareI[][]) => board.map((row: SquareI[]) => row.map((o: SquareI) => ({...o})));
 
@@ -67,27 +59,34 @@ export const getEmojisBoard = (board: SquareI[][]) => {
   return emojisBoard;
 };
 
-export const getToday = () => new Date(new Date().setHours(0, 0, 0, 0));
-
-export const getDateParsed = (date: Date) => date.toISOString().slice(0,10);
-
-export const getDaysFromFirstDay = (date: Date) => {
-  const days = Math.round(Math.abs((date.valueOf() - FIRST_DAY.valueOf()) / DAY_MS));
-  return days;
+export const getRandomWord = async () => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/swiftdle/random`);
+    if(!response.ok) {
+      throw Error(`Status ${response.status}`);
+    };
+    const data = await response.json();
+    return data;
+  } catch(error: any) {
+    console.log(`Error in fetch Random. ${error.message}`);
+    gtm.getRandomWordError(error.message);
+    return {};
+  }
 };
 
-export const getRandomWord = () => {
-  return words[Math.floor(Math.random() * words.length)];
-};
-
-export const getTodayWord = () => {
-  const today = getToday();
-  const date = getDateParsed(today);
-  const daysFromFirstDay = getDaysFromFirstDay(today);
-  return {
-    word: words[daysFromFirstDay % words.length],
-    date,
-  };
+export const getTodayWord = async () => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/swiftdle`);
+    if(!response.ok) {
+      throw Error(`Status ${response.status}`);
+    };
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.log(`Error in fetch Today. ${error.message}`);
+    gtm.getRandomWordError(error.message);
+    return {};
+  }
 };
 
 export const canShare = () => {
