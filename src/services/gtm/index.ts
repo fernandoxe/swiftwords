@@ -115,6 +115,20 @@ const playRandom = (winner: boolean) => {
   );
 };
 
+const getTodayWordError = (error: string) => {
+  event('Get Today error',
+    `${error}`,
+    true,
+  );
+};
+
+const getRandomWordError = (error: string) => {
+  event('Get Random error',
+    `${error}`,
+    true,
+  );
+};
+
 export const gtm = {
   startGame,
   startAppLastGame,
@@ -132,4 +146,6 @@ export const gtm = {
   shareError,
   copyError,
   playRandom,
+  getTodayWordError,
+  getRandomWordError
 };
