@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Board } from '../Board';
 import { Keyboard } from '../Keyboard';
 import { EMPTY_KEYSTATES, ATTEMPTS } from '../../constants';
@@ -19,9 +19,9 @@ import {
 } from '../../services';
 import { Header } from '../Header';
 import { gtm } from '../../services/gtm';
+import { Loader } from '../Loader/Loader';
 
 const rows = ATTEMPTS;
-const todayWord = getTodayWord();
 
 export interface Word {
   word: string;
@@ -30,9 +30,17 @@ export interface Word {
   album: string;
 }
 
+export interface TodayWord {
+  word: Word;
+  date: string;
+}
+
 export const Game = () => {
   console.log('render game');
+
+  const [todayWord, setTodayWord] = useState({word: {word: '', line: '', song: '', album: ''}, date: ''});
   const [word, setWord] = useState(todayWord.word);
+  const [loading, setLoading] = useState(true);
   const [row, setRow] = useState(0);
   const [square, setSquare] = useState(0);
   const [enterDisabled, setEnterDisabled] = useState(true);
@@ -44,6 +52,22 @@ export const Game = () => {
   const [gameFinished, setGameFinished] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
   const [charts, setCharts] = useState(getCharts);
+  const [board, setBoard] = useState([[{char: '', guessed: 0}]]);
+
+  useEffect(() => {
+    const fetchWord = async () => {
+      const fetchedWord = await getTodayWord();
+
+      if(fetchedWord.word) {
+        setTodayWord(fetchedWord);
+        setWord(fetchedWord.word);
+        setBoard(getInitBoard(fetchedWord.word, fetchedWord.date));
+        setLoading(false);
+      }
+    };
+
+    fetchWord();
+  }, []);
 
   const resetStateForRandom = () => {
     setRow(0);
@@ -55,36 +79,33 @@ export const Game = () => {
     setShowResultButton(false);
     setGameFinished(false);
   };
-  
-  const getInitBoard = (random?: boolean) => {
-    console.log('init board');
-    if(random) { // never when reload page
-      const randomWord = getRandomWord();
-      setWord(randomWord);
-      resetStateForRandom();
-      setIsRandom(true);
-      gtm.startGame(true);
-      return getEmptyBoard(randomWord.word.length);
-    } else { // always when reload page
-      const lastGame = getLastGame();
-      if(lastGame.board && todayWord.date === lastGame.date) { // last game exists and same date
-        setGameFinished(true);
-        setShowResult(true);
-        setShowResultButton(true);
-        setWord(lastGame.word);
-        setWinner(lastGame.winner);
-        setKeyStates(lastGame.keyStates);
-        gtm.showResult(lastGame.winner);
-        gtm.startAppLastGame(lastGame.word.word, lastGame.winner);
-        return lastGame.board;
-      } else { // first time game or new date
-        gtm.startGame(false);
-        return getEmptyBoard(word.word.length);
-      }
+
+  const getInitBoard = (initWord: Word, date: string) => {
+    const lastGame = getLastGame();
+    if(lastGame.board && date === lastGame.date) { // last game exists and same date
+      setGameFinished(true);
+      setShowResult(true);
+      setShowResultButton(true);
+      setWord(lastGame.word);
+      setWinner(lastGame.winner);
+      setKeyStates(lastGame.keyStates);
+      gtm.showResult(lastGame.winner);
+      gtm.startAppLastGame(lastGame.word.word, lastGame.winner);
+      return lastGame.board;
+    } else { // first time game or new date
+      gtm.startGame(false);
+      return getEmptyBoard(initWord.word.length);
     }
   };
 
-  const [board, setBoard] = useState(getInitBoard);
+  const getRandomBoard = async () => {
+    const fetchedRandomWord = await getRandomWord();
+    setWord(fetchedRandomWord);
+    resetStateForRandom();
+    setIsRandom(true);
+    gtm.startGame(true);
+    return getEmptyBoard(fetchedRandomWord.word.length);
+  };
   
   const handleKeyClick = (char: string) => {
     if(square === word.word.length || row === rows) { // leave when row or board is full
@@ -187,38 +208,52 @@ export const Game = () => {
     setShowResult(false);
   };
 
-  const handleRandomClick = () => {
-    setBoard(getInitBoard(true));
+  const handleRandomClick = async () => {
+    setLoading(true);
+    const randomBoard = await getRandomBoard();
+    setLoading(false);
+    setBoard(randomBoard);
   };
 
   return (
-    <div className="max-w-xl min-w-full">
-      <Header
-        showResultButton={showResultButton}
-        charts={charts}
-        onResultClick={handleResultOpen}
-      />
-      <Board board={board} />
-      <Keyboard
-        keyStates={keyStates}
-        onKeyClick={handleKeyClick}
-        onEnterClick={handleEnterClick}
-        onDeleteClick={handleDeleteClick}
-        enterDisabled={enterDisabled}
-        deleteDisabled={deleteDisabled}
-        keyBoardDisabled={gameFinished}
-      />
-      {showResult &&
-        <Result
-          winner={winner}
-          word={word}
-          date={todayWord.date}
-          emojisBoard={getEmojisBoard(board)}
-          random={isRandom}
-          onClose={handleResultClose}
-          onRandom={handleRandomClick}
-        />
-      }
-    </div>
-  )
+    <>
+        <div className="max-w-xl min-w-full">
+          <Header
+            showResultButton={showResultButton}
+            charts={charts}
+            onResultClick={handleResultOpen}
+            />
+          {!loading &&
+            <>
+              <Board board={board} />
+              <Keyboard
+                keyStates={keyStates}
+                onKeyClick={handleKeyClick}
+                onEnterClick={handleEnterClick}
+                onDeleteClick={handleDeleteClick}
+                enterDisabled={enterDisabled}
+                deleteDisabled={deleteDisabled}
+                keyBoardDisabled={gameFinished}
+              />
+              {showResult &&
+                <Result
+                  winner={winner}
+                  word={word}
+                  date={todayWord.date}
+                  emojisBoard={getEmojisBoard(board)}
+                  random={isRandom}
+                  onClose={handleResultClose}
+                  onRandom={handleRandomClick}
+                />
+              }
+            </>
+          }
+          {loading &&
+            <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-[-1]">
+              <Loader />
+            </div>
+          }
+        </div>
+    </>
+  );
 };
