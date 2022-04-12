@@ -17,7 +17,7 @@ export const Modal:FC<ModalProps> = (props) => {
   return (
     <div onClick={() => handleClick(false)} className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-30 dark:bg-opacity-70 overflow-y-auto">
       <div className="flex items-center justify-center p-4 min-h-screen">
-        <div onClick={(e) => e.stopPropagation()} className="w-[94%] max-w-xl rounded-lg p-4 bg-light-background dark:bg-dark-background shadow-md">
+        <div onClick={(e) => e.stopPropagation()} className="w-[94%] max-w-md rounded-lg p-4 bg-light-background dark:bg-dark-background shadow-md">
           <div className="flex justify-between mb-2">
             <div className="font-bold text-xl">
               {props.title}
