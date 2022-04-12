@@ -18,7 +18,7 @@ export const Square = (props: SquareI) => {
   const { state } = useContext(Context);
 
   const background = props.guessed === keyState.INITIAL ?
-    `bg-light-background dark:bg-dark-background ${props.border ? 'border-light-primary-700 dark:border-dark-primary-700' : 'border-light-border dark:border-dark-border'}`:
+    `bg-light-background dark:bg-dark-background ${props.border ? 'border-light-primary-400 dark:border-dark-primary-700' : 'border-light-border dark:border-dark-border'}`:
     props.guessed === keyState.ERROR ?
     'bg-light-error-300 dark:bg-dark-error-700 border-light-error-300 dark:border-dark-error-700' :
     props.guessed === keyState.ALMOST ?
