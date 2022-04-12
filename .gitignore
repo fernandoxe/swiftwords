@@ -24,6 +24,5 @@ yarn-error.log*
 
 .vercel
 .env
-data
-public/icons
-public/manifest.json
+public/*
+!public/index
