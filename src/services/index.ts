@@ -34,6 +34,8 @@ export const isWinner = (row: SquareI[], word: Word) => {
   return row.every((square, index) => square.char === word.word[index].toLowerCase());
 };
 
+export const isEmptyRow = (row: SquareI[]) => row.every(square => !square.char);
+
 export const getEmojisBoard = (board: SquareI[][]) => {
   const emojisBoard: string[][] = [];
 
@@ -100,7 +102,7 @@ export const canCopy = () => {
   return copy;
 }
 
-const getBoardForSave = (board: SquareI[][]) => {
+export const getSimpleBoard = (board: SquareI[][]) => {
   return board.map(row => row.map(square => ({char: square.char, guessed: square.guessed})));
 };
 
@@ -133,7 +135,7 @@ export const getCharts = () => {
 }
 
 export const saveGame = (board: SquareI[][], word: Word, date: string, winner: boolean, keyStates: KeyStates) => {
-  const newBoard = getBoardForSave(board);
+  const newBoard = getSimpleBoard(board);
   const game = {
     board: newBoard,
     word,
@@ -166,3 +168,11 @@ export const saveCharts = (charts: ChartsProps, isRandom: boolean, winner: boole
 };
 
 export const percent = (value: number, total: number) => `${total ? value*100/total : '0'}%`;
+
+export const share = async (text: string, title?: string) => {
+  await navigator.share({
+    text,
+    title: title || process.env.REACT_APP_TITLE,
+    // url: url || process.env.REACT_APP_URL,
+  });
+};
