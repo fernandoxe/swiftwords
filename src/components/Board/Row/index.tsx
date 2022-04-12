@@ -2,6 +2,7 @@ import { Square, SquareI } from '../Square';
 
 export interface RowProps {
   row: SquareI[];
+  small?: boolean;
 }
 
 export const Row = (props: RowProps) => {
@@ -13,6 +14,7 @@ export const Row = (props: RowProps) => {
           char={char.char}
           guessed={char.guessed}
           border={char.border}
+          small={props.small}
         />
       )}
     </div>

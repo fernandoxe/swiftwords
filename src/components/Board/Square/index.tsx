@@ -12,6 +12,7 @@ export interface SquareI {
   char: string;
   guessed: keyState;
   border?: boolean;
+  small?: boolean;
 }
 
 export const Square = (props: SquareI) => {
@@ -27,9 +28,9 @@ export const Square = (props: SquareI) => {
 
   return (
     <div
-      className={`flex items-center justify-center uppercase font-bold border-2 ${background} w-12 h-12 m-1 select-none`}
+      className={`flex items-center justify-center uppercase font-bold border-2 ${background} ${props.small ? 'w-4 h-4 m-0.5' : 'w-12 h-12 m-1'} select-none`}
     >
-      {props.char}
+      {props.small ? '' : props.char}
     </div>
   );
 };
