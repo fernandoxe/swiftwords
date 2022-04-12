@@ -6,7 +6,6 @@ import { keyState, SquareI } from '../Board/Square';
 import { Result } from '../Result';
 import {
   getCharts,
-  getEmojisBoard,
   getEmptyBoard,
   getLastGame,
   getRandomWord,
@@ -76,7 +75,6 @@ export const Game = () => {
     setDeleteDisabled(true);
     setKeyStates(EMPTY_KEYSTATES);
     setShowResult(false);
-    setShowResultButton(false);
     setGameFinished(false);
   };
 
@@ -210,6 +208,7 @@ export const Game = () => {
 
   const handleRandomClick = async () => {
     setLoading(true);
+    setShowResultButton(false);
     const randomBoard = await getRandomBoard();
     setLoading(false);
     setBoard(randomBoard);
@@ -240,7 +239,7 @@ export const Game = () => {
                   winner={winner}
                   word={word}
                   date={todayWord.date}
-                  emojisBoard={getEmojisBoard(board)}
+                  board={board}
                   random={isRandom}
                   onClose={handleResultClose}
                   onRandom={handleRandomClick}
