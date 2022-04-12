@@ -36,24 +36,33 @@ export const isWinner = (row: SquareI[], word: Word) => {
 
 export const isEmptyRow = (row: SquareI[]) => row.every(square => !square.char);
 
+const getBaseEmojis = () => {
+  const dark = localStorage.getItem('theme') === 'dark';
+  const highContrast = localStorage.getItem('highContrast') === '1';
+  const colored = {
+    [keyState.ERROR.toString()]: dark ? '⬛' : '⬜',
+    [keyState.ALMOST.toString()]: '🟨',
+    [keyState.GUESSED.toString()]: '🟩',
+  };
+
+  if(highContrast) {
+    colored[keyState.ALMOST] = '🟧';
+    colored[keyState.GUESSED] = '🟦';
+  }
+
+  return colored;
+};
+
 export const getEmojisBoard = (board: SquareI[][]) => {
   const emojisBoard: string[][] = [];
+  const baseEmojis = getBaseEmojis();
 
   for (let i = 0; i < board.length; i++) {
     const row = board[i];
     const newRow = [];
     for (let j = 0; j < row.length; j++) {
       const square = row[j];
-      if(square.guessed === keyState.ERROR) {
-        // emojisRow.push('\u2B1C');
-        newRow.push('⬜');
-      } else if(square.guessed === keyState.ALMOST) {
-        // emojisRow.push('\u1F7E8');
-        newRow.push('🟨');
-      } else if(square.guessed === keyState.GUESSED) {
-        // emojisRow.push('\u1F7E9');
-        newRow.push('🟩');
-      }
+      newRow.push(baseEmojis[square.guessed]);
     }
     newRow.length && emojisBoard.push(newRow);
   }
