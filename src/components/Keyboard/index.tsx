@@ -57,11 +57,11 @@ export const Keyboard = ({
     };
 
     document.addEventListener('keyup', keyup);
-    console.log('add keyup');
+    // console.log('add keyup');
 
     return () => {
       document.removeEventListener('keyup', keyup);
-      console.log('remove keyup');
+      // console.log('remove keyup');
     };
   }, [handleKeyClick, enterDisabled, deleteDisabled]);
 
