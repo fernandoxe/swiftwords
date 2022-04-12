@@ -1,4 +1,10 @@
-import { percent } from '../../services';
+import { canCopy, canShare, percent, share } from '../../services';
+import { Button } from '../Button';
+import { ReactComponent as ShareIcon } from '../../img/icons/share.svg';
+import { ReactComponent as CopyIcon } from '../../img/icons/copy.svg';
+import { gtm } from '../../services/gtm';
+import { useState } from 'react';
+import { Snackbar } from '../Snackbar';
 
 export interface ChartsProps {
   total: number;
@@ -13,6 +19,51 @@ export interface ChartsProps {
 export const Charts = (props: ChartsProps) => {
   const gamesWon = percent(props.winner, props.total);
   const wonByRow = props.byRow.map(x => ({winner: x, width: percent(x, props.total)}));
+  const [copied, setCopied] = useState(false);
+
+  const getTitle = () => {
+    return `My ${process.env.REACT_APP_TITLE} statistics to date`;
+  };
+
+  const getShareText = () => {
+    let text = '';
+    text += `${getTitle()}\n\n`;
+    text += `Total games: ${props.total}\n`;
+    text += `Swiftdle: ${props.normal}\n`;
+    text += `Random: ${props.random}\n\n`;
+    text += `Current streak: ${props.currentStreak}\n`;
+    text += `Best streak: ${props.bestStreak}\n`;
+    text += `Games won: ${props.winner}\n\n`;
+    text += `\n${process.env.REACT_APP_SHORT_URL}`;
+    return text;
+  };
+
+  const handleShareClick = async () => {
+    console.log('getShareText:\n', getShareText());
+    gtm.share('charts', false, false);
+    try {
+      await share(getShareText());
+      console.log('Share charts successful');
+    } catch (error: any) {
+      gtm.shareError('charts', error.message);
+      console.log('Share charts error', error.message);
+    }
+  };
+
+  const handleCopyClick = async () => {
+    gtm.copy('charts', false, false);
+    try {
+      await navigator.clipboard.writeText(`${getShareText()}`);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 3000);
+      console.log('Copy charts successful');
+    } catch (error: any) {
+      gtm.copyError(error.message);
+      console.log('Copy charts error', error.message);
+    }
+  };
 
   return (
     <>
@@ -49,7 +100,7 @@ export const Charts = (props: ChartsProps) => {
         Games won by row
       </div>
       {wonByRow.map((row, index) =>
-        <div key={index} className="flex items-center mb-1 last:mb-0">
+        <div key={index} className={`flex items-center ${index === wonByRow.length - 1 ? '' : 'mb-1'}`}>
           <div className="text-sm w-3.5 leading-none">
             {index + 1}
           </div>
@@ -61,7 +112,38 @@ export const Charts = (props: ChartsProps) => {
             </div>
           </div>
         </div>
-      )}    
+      )}
+      {(canShare() || canCopy()) &&
+        <div className="flex justify-center mt-4">
+          {canShare() &&
+            <div>
+              <Button
+                onClick={handleShareClick}
+              >
+                <span>Share</span>
+                <div className="w-5 ml-1">
+                  <ShareIcon />
+                </div>
+              </Button>
+            </div>
+          }
+          {canCopy() &&
+            <div className="ml-2">
+              <Button
+                onClick={handleCopyClick}
+              >
+                <span>Copy</span>
+                <div className="w-5 ml-1">
+                  <CopyIcon />
+                </div>
+              </Button>
+            </div>
+          }
+        </div>
+      }
+      {copied &&
+        <Snackbar />
+      }
     </>
   );
 };
