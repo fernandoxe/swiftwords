@@ -8,16 +8,18 @@ import { ReactComponent as RepeatIcon } from '../../img/icons/repeat.svg';
 import { ReactComponent as CheckIcon } from '../../img/icons/check.svg';
 import { ReactComponent as NocheckIcon } from '../../img/icons/nocheck.svg';
 import { Fragment, useState } from 'react';
-import { canShare } from '../../services';
+import { canCopy, canShare, getEmojisBoard, share } from '../../services';
 import { Snackbar } from '../Snackbar';
 import { Button } from '../Button';
 import { gtm } from '../../services/gtm';
+import { SquareI } from '../Board/Square';
+import { Board } from '../Board';
 
 export interface ResultProps {
   winner: boolean;
   word: Word;
   date: string;
-  emojisBoard: string[][];
+  board: SquareI[][];
   random: boolean;
   onClose?: () => void;
   onRandom?: () => void;
@@ -49,8 +51,9 @@ export const Result = (props: ResultProps) => {
     return title;
   };
 
-  const emojisBoardToString = () => {
-    const emojisBoardString = props.emojisBoard
+  const getEmojisString = () => {
+    const emojisBoard = getEmojisBoard(props.board);
+    const emojisBoardString = emojisBoard
       .map(row => row.map(square => square).join('')).join('\n');
     return emojisBoardString;
   };
@@ -64,37 +67,33 @@ export const Result = (props: ResultProps) => {
       text += `🎼 ${props.word.song}\n`;
       text += `💿 ${props.word.album}\n\n`;
     }
-    text += `${emojisBoardToString()}\n\n${process.env.REACT_APP_SHORT_URL}`;
+    text += `${getEmojisString()}\n\n${process.env.REACT_APP_SHORT_URL}`;
     return text;
   };
 
   const handleShareClick = async () => {
-    gtm.share(props.random, props.winner);
+    gtm.share('result', props.random, props.winner);
     try {
-      await navigator.share({
-        text: `${getShareText(props.random)}`,
-        title: process.env.REACT_APP_TITLE,
-        // url: process.env.REACT_APP_URL,
-      });
-      console.log('Share successful');
+      await share(getShareText(props.random));
+      console.log('Share result successful');
     } catch (error: any) {
-      gtm.shareError(error.message);
-      console.log('Share error', error.message);
+      gtm.shareError('result', error.message);
+      console.log('Share result error', error.message);
     }
   };
 
   const handleCopyClick = async () => {
-    gtm.copy(props.random, props.winner);
+    gtm.copy('result', props.random, props.winner);
     try {
       await navigator.clipboard.writeText(`${getShareText(props.random)}`);
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
       }, 3000);
-      console.log('Copy successful');
+      console.log('Copy result successful');
     } catch (error: any) {
       gtm.copyError(error.message);
-      console.log('Share copy error', error.message);
+      console.log('Copy result error', error.message);
     }
   };
 
@@ -119,8 +118,8 @@ export const Result = (props: ResultProps) => {
               <NocheckIcon />
             </div>
           }
-        <div className="mb-5 text-center">
-          The word was <span className="text-light-primary-600 dark:text-dark-primary-400">{props.word.word}</span>
+        <div className="mb-5 text-center text-light-primary-600 dark:text-dark-primary-400 text-4xl">
+          {props.word.word}
         </div>
         <div className="text-lg leading-none mb-1 text-center">
           <i>
@@ -139,28 +138,37 @@ export const Result = (props: ResultProps) => {
           </div>
           {props.word.album}
         </div>
-        {canShare() &&
-        <div className="mb-3">
-          <Button onClick={handleShareClick}>
-            <span>Share result</span>
-            <div className="w-5 ml-1">
-              <ShareIcon />
-            </div>
-          </Button>
-        </div>
-        }
-        {/* {!canShare && canCopy && */}
-          <div className="mb-5">
-            <Button
-              onClick={handleCopyClick}
-            >
-              <span>Copy result</span>
-              <div className="w-5 ml-1">
-                <CopyIcon />
-              </div>
-            </Button>
+        <div className="flex mb-5">
+          <div className="flex items-center">
+            <Board board={props.board} small />
           </div>
-        {/* } */}
+          {(canShare() || canCopy()) &&
+            <div className="flex flex-col items-center justify-center ml-4">
+              {canShare() &&
+                <div className="mb-3">
+                  <Button onClick={handleShareClick}>
+                    <span>Share</span>
+                    <div className="w-5 ml-1">
+                      <ShareIcon />
+                    </div>
+                  </Button>
+                </div>
+              }
+              {canCopy() &&
+                <div>
+                  <Button
+                    onClick={handleCopyClick}
+                  >
+                    <span>Copy</span>
+                    <div className="w-5 ml-1">
+                      <CopyIcon />
+                    </div>
+                  </Button>
+                </div>
+              }
+            </div>
+          }
+        </div>
         <div className="text-center mb-3">
           Come back tomorrow for a new {process.env.REACT_APP_TITLE} of the day
         </div>
