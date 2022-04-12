@@ -84,13 +84,13 @@ const canCopyError = () => {
 };
 
 const share = (title: string, random: boolean, winner: boolean) => {
-  event(`Share ${title} ${random ? ' random' : ''} game`,
+  event(`Share ${title}${random ? ' random' : ''} game`,
     `${winner}`
   );
 };
 
-const copy = (random: boolean, winner: boolean) => {
-  event(`Copy${random ? ' random' : ''} game`,
+const copy = (title: string, random: boolean, winner: boolean) => {
+  event(`Copy ${title}${random ? ' random' : ''} game`,
     `${winner}`
   );
 };
