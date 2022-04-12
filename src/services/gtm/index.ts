@@ -83,8 +83,8 @@ const canCopyError = () => {
   );
 };
 
-const share = (random: boolean, winner: boolean) => {
-  event(`Share${random ? ' random' : ''} game`,
+const share = (title: string, random: boolean, winner: boolean) => {
+  event(`Share ${title} ${random ? ' random' : ''} game`,
     `${winner}`
   );
 };
@@ -95,8 +95,8 @@ const copy = (random: boolean, winner: boolean) => {
   );
 };
 
-const shareError = (error: string) => {
-  event('Share error',
+const shareError = (title: string, error: string) => {
+  event(`Share ${title} error`,
     `${error}`,
     true,
   );
