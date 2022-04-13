@@ -33,7 +33,12 @@ export const Settings = () => {
           <Switch id="dark" checked={darkValue} onChange={handleDarkChange} />
         </div>
         <div className="ml-4">
-          Dark mode
+          <div className="font-bold">
+            Reputation mood
+          </div>
+          <div className="text-sm">
+            Dark mode
+          </div>
         </div>
       </div>
       <div className="flex items-center justify-start">
@@ -41,7 +46,12 @@ export const Settings = () => {
           <Switch id="highContrast" checked={highContrastValue} onChange={handleHighContrastChange} />
         </div>
         <div className="ml-4">
-          High contrast mode
+          <div className="font-bold">
+            Screaming color
+          </div>
+          <div className="text-sm">
+            For color blindness
+          </div>
         </div>
       </div>
     </>
