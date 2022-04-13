@@ -72,7 +72,7 @@ export const getEmojisBoard = (board: SquareI[][]) => {
 
 export const getRandomWord = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/random`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}?random=1`);
     if(!response.ok) {
       throw Error(`Status ${response.status}`);
     };
