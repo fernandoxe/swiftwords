@@ -36,6 +36,8 @@ export const isWinner = (row: SquareI[], word: Word) => {
 
 export const isEmptyRow = (row: SquareI[]) => row.every(square => !square.char);
 
+export const removeEmptyRows = (board: SquareI[][]) => board.filter((row) => !isEmptyRow(row));
+
 const getBaseEmojis = () => {
   const dark = localStorage.getItem('theme') === 'dark';
   const highContrast = localStorage.getItem('highContrast') === '1';

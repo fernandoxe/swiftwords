@@ -8,7 +8,7 @@ import { ReactComponent as RepeatIcon } from '../../img/icons/repeat.svg';
 import { ReactComponent as CheckIcon } from '../../img/icons/check.svg';
 import { ReactComponent as NocheckIcon } from '../../img/icons/nocheck.svg';
 import { Fragment, useState } from 'react';
-import { canCopy, canShare, getEmojisBoard, share } from '../../services';
+import { canCopy, canShare, getEmojisBoard, removeEmptyRows, share } from '../../services';
 import { Snackbar } from '../Snackbar';
 import { Button } from '../Button';
 import { gtm } from '../../services/gtm';
@@ -52,7 +52,7 @@ export const Result = (props: ResultProps) => {
   };
 
   const getEmojisString = () => {
-    const emojisBoard = getEmojisBoard(props.board);
+    const emojisBoard = getEmojisBoard(removeEmptyRows(props.board));
     const emojisBoardString = emojisBoard
       .map(row => row.map(square => square).join('')).join('\n');
     return emojisBoardString;

@@ -66,7 +66,7 @@ export const Keyboard = ({
   }, [handleKeyClick, enterDisabled, deleteDisabled]);
 
   return (
-    <div>
+    <>
       <div className="flex justify-center w-full">
         {FIRST_ROW.map((char, index) =>
           <Key
@@ -113,6 +113,6 @@ export const Keyboard = ({
           onClick={() => handleKeyClick('delete')}
         />
       </div>
-    </div>
+    </>
   );
 };

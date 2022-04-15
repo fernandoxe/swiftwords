@@ -216,43 +216,43 @@ export const Game = () => {
 
   return (
     <>
-        <div className="max-w-xl min-w-full">
-          <Header
-            showResultButton={showResultButton}
-            charts={charts}
-            onResultClick={handleResultOpen}
+      <div className="max-w-xl min-w-full">
+        <Header
+          showResultButton={showResultButton}
+          charts={charts}
+          onResultClick={handleResultOpen}
+          />
+        {!loading &&
+          <>
+            <Board board={board} />
+            <Keyboard
+              keyStates={keyStates}
+              onKeyClick={handleKeyClick}
+              onEnterClick={handleEnterClick}
+              onDeleteClick={handleDeleteClick}
+              enterDisabled={enterDisabled}
+              deleteDisabled={deleteDisabled}
+              keyBoardDisabled={gameFinished}
             />
-          {!loading &&
-            <>
-              <Board board={board} />
-              <Keyboard
-                keyStates={keyStates}
-                onKeyClick={handleKeyClick}
-                onEnterClick={handleEnterClick}
-                onDeleteClick={handleDeleteClick}
-                enterDisabled={enterDisabled}
-                deleteDisabled={deleteDisabled}
-                keyBoardDisabled={gameFinished}
+            {showResult &&
+              <Result
+                winner={winner}
+                word={word}
+                date={todayWord.date}
+                board={board}
+                random={isRandom}
+                onClose={handleResultClose}
+                onRandom={handleRandomClick}
               />
-              {showResult &&
-                <Result
-                  winner={winner}
-                  word={word}
-                  date={todayWord.date}
-                  board={board}
-                  random={isRandom}
-                  onClose={handleResultClose}
-                  onRandom={handleRandomClick}
-                />
-              }
-            </>
-          }
-          {loading &&
-            <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-[-1]">
-              <Loader />
-            </div>
-          }
-        </div>
+            }
+          </>
+        }
+        {loading &&
+          <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-[-1]">
+            <Loader />
+          </div>
+        }
+      </div>
     </>
   );
 };
