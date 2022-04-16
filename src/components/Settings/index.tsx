@@ -37,7 +37,7 @@ export const Settings = () => {
             Reputation mood
           </div>
           <div className="text-sm">
-            Dark mode
+            Dark theme
           </div>
         </div>
       </div>
