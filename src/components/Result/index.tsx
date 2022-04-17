@@ -14,6 +14,7 @@ import { Button } from '../Button';
 import { gtm } from '../../services/gtm';
 import { SquareI } from '../Board/Square';
 import { Board } from '../Board';
+import { Twitter } from '../Twitter/Twitter';
 
 export interface ResultProps {
   winner: boolean;
@@ -38,7 +39,7 @@ export const Result = (props: ResultProps) => {
     return (
       words.map((w, i) =>
       <Fragment key={i}>
-        {w}{i !== words.length - 1 ? <strong className="font-normal text-light-primary-600 dark:text-dark-primary-400">{word}</strong> : ''}
+        {w}{i !== words.length - 1 ? <strong className="font-normal text-light-primary-600 dark:text-dark-primary-500">{word}</strong> : ''}
       </Fragment>
       )
     );
@@ -109,36 +110,40 @@ export const Result = (props: ResultProps) => {
     >
       <div className="flex flex-col items-center">
           {props.winner &&
-          <div className="mb-2 w-11 text-light-success-500 dark:text-dark-success-600">
+          <div className="mb-2 w-10 text-light-success-500 dark:text-dark-success-600">
             <CheckIcon />
           </div>
           }
           {!props.winner &&
-            <div className="mb-2 w-11 text-red-600 dark:text-red-700">
+            <div className="mb-2 w-10 text-red-600 dark:text-red-700">
               <NocheckIcon />
             </div>
           }
-        <div className="mb-5 text-center text-light-primary-600 dark:text-dark-primary-400 text-4xl">
+        <div className="mb-4 text-4xl leading-none text-light-primary-600 dark:text-dark-primary-500 text-center ">
           {props.word.word}
         </div>
-        <div className="text-lg leading-none mb-1 text-center">
+        <div className="mb-4 text-lg leading-none text-center">
           <i>
             {getMatchedText(props.word.line, props.word.word)}
           </i>
         </div>
-        <div className="flex items-center mb-1">
-          <div className="w-5 mr-1">
+        <div className="flex text-sm items-center">
+          <div className="shrink-0 w-5 mr-1">
             <SongIcon />
           </div>
-          {props.word.song}
+          <div className="leading-none">
+            {props.word.song}
+          </div>
         </div>
-        <div className="flex items-center mb-5">
-          <div className="w-5 mr-1">
+        <div className="flex items-center text-sm leading-none mb-4">
+          <div className="shrink-0 w-5 mr-1">
             <AlbumIcon />
           </div>
-          {props.word.album}
+          <div className="leading-none">
+            {props.word.album}
+          </div>
         </div>
-        <div className="flex mb-5">
+        <div className="flex mb-4">
           <div className="flex items-center">
             <Board board={props.board} small />
           </div>
@@ -169,8 +174,8 @@ export const Result = (props: ResultProps) => {
             </div>
           }
         </div>
-        <div className="text-center mb-3">
-          Come back tomorrow for a new {process.env.REACT_APP_TITLE} of the day
+        <div className="mb-4">
+          <Twitter from="Result" />
         </div>
         <Button
           bordered
