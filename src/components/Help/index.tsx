@@ -1,5 +1,6 @@
 import { Modal } from '../Modal';
 import { Row } from '../Board/Row';
+import { Twitter } from '../Twitter/Twitter';
 
 const firstExample = [
   {
@@ -106,8 +107,11 @@ export const Help = (props: HelpProps) => {
         <div className="mb-2">
           In the next tries use the previous hints to guess the word
         </div>
-        <div>
+        <div className="mb-3">
           <Row row={secondExample} />
+        </div>
+        <div className="flex flex-col items-center">
+          <Twitter from="Help" />
         </div>
       </div>
     </Modal>
