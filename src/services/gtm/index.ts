@@ -14,21 +14,21 @@ const event = (
 const startGame = (random: boolean) => {
   event(`Start${random ? ' random' : ''} game`,
     `Start${random ? ' random' : ''} game`,
-    true,
+    true
   );
 };
 
 const startAppLastGame = (word: string, winner: boolean) => {
   event('Start app last game',
     `${word} | ${winner}`,
-    true,
+    true
   );
 };
 
-const endGame = (random: boolean, word: string, winner: boolean, tries: number) => {
+const endGame = (random: boolean, date: string, word: string, winner: boolean, tries: number) => {
   event(`End${random ? ' random' : ''} game`,
-    `${word} | ${winner} | ${tries}`,
-    true,
+    `${random ? '' : `${date} | `}${word} | ${winner} | ${tries}`,
+    true
   );
 };
 
@@ -98,14 +98,14 @@ const copy = (title: string, random: boolean, winner: boolean) => {
 const shareError = (title: string, error: string) => {
   event(`Share ${title} error`,
     `${error}`,
-    true,
+    true
   );
 };
 
 const copyError = (error: string) => {
   event('Copy error',
     `${error}`,
-    true,
+    true
   );
 };
 
@@ -118,14 +118,20 @@ const playRandom = (winner: boolean) => {
 const getTodayWordError = (error: string) => {
   event('Get Today error',
     `${error}`,
-    true,
+    true
   );
 };
 
 const getRandomWordError = (error: string) => {
   event('Get Random error',
     `${error}`,
-    true,
+    true
+  );
+};
+
+const openTwitter = (from: string) => {
+  event(`Open Twitter`,
+    `${from}`
   );
 };
 
@@ -147,5 +153,6 @@ export const gtm = {
   copyError,
   playRandom,
   getTodayWordError,
-  getRandomWordError
+  getRandomWordError,
+  openTwitter
 };
