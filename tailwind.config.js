@@ -33,6 +33,9 @@ module.exports = {
           disabled: colors.slate,
         },
       },
+      fontFamily: {
+        primary: ['Nunito', 'Arial', 'sans-serif'],
+      },
     },
     screens: {
       mouse: {
