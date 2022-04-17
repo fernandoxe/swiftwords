@@ -181,7 +181,7 @@ export const Game = () => {
       setCharts(saveCharts(charts, isRandom, win, row)); // save charts to localStorage
       setWinner(win);
       setGameFinished(true);
-      gtm.endGame(isRandom, word.word, win, newRowNumber);
+      gtm.endGame(isRandom, todayWord.date, word.word, win, newRowNumber);
       setTimeout(() => {
         setShowResult(true);
         setShowResultButton(true);
