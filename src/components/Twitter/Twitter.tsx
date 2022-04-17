@@ -12,21 +12,19 @@ export const Twitter = (props: TwitterProps) => {
   };
 
   return (
-    <div className="flex items-center">
-      <div className="shrink-0 w-4 mr-1 text-light-primary-600 dark:text-dark-primary-500">
+    <>
+      <div className="inline-block align-middle w-4 mr-1 text-light-primary-600 dark:text-dark-primary-500">
         <TwitterIcon />
       </div>
-      <div className="leading-none">
-        <a
-          className="text-light-primary-600 dark:text-dark-primary-500"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`https://twitter.com/${process.env.REACT_APP_TWITTER}`}
-          onClick={handleLinkClick}
-        >
-          @{process.env.REACT_APP_TWITTER}
-        </a><span> to get notifications</span>
-      </div>
-    </div>
+      <a
+        className="align-middle text-light-primary-600 dark:text-dark-primary-500"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={`https://twitter.com/${process.env.REACT_APP_TWITTER}`}
+        onClick={handleLinkClick}
+      >
+        @{process.env.REACT_APP_TWITTER}
+      </a><span className="align-middle"> to get notifications</span>
+    </>
   );
 };
