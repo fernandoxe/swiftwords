@@ -64,7 +64,7 @@ export const Result = (props: ResultProps) => {
     text += `${getTitle(random)}\n\n`;
     if(random) {
       text += `🔤 ${props.word.word}\n`;
-      text += `🎶 ${props.word.line} 🎶\n`;
+      text += `🎶 ${props.word.line}\n`;
       text += `🎼 ${props.word.song}\n`;
       text += `💿 ${props.word.album}\n\n`;
     }
