@@ -110,7 +110,7 @@ export const Help = (props: HelpProps) => {
         <div className="mb-3">
           <Row row={secondExample} />
         </div>
-        <div className="flex flex-col items-center">
+        <div className="text-center">
           <Twitter from="Help" />
         </div>
       </div>
