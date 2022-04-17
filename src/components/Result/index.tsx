@@ -127,21 +127,21 @@ export const Result = (props: ResultProps) => {
             {getMatchedText(props.word.line, props.word.word)}
           </i>
         </div>
-        <div className="flex text-sm items-center">
-          <div className="shrink-0 w-5 mr-1">
+        <div className="text-center text-sm">
+          <div className="inline-block align-middle w-5 mr-1">
             <SongIcon />
           </div>
-          <div className="leading-none">
+          <span className="align-middle">
             {props.word.song}
-          </div>
+          </span>
         </div>
-        <div className="flex items-center text-sm leading-none mb-4">
-          <div className="shrink-0 w-5 mr-1">
+        <div className="text-center text-sm mb-4">
+          <div className="inline-block align-middle w-5 mr-1">
             <AlbumIcon />
           </div>
-          <div className="leading-none">
+          <span className="align-middle">
             {props.word.album}
-          </div>
+          </span>
         </div>
         <div className="flex mb-4">
           <div className="flex items-center">
@@ -174,7 +174,7 @@ export const Result = (props: ResultProps) => {
             </div>
           }
         </div>
-        <div className="mb-4">
+        <div className="text-center mb-4">
           <Twitter from="Result" />
         </div>
         <Button
