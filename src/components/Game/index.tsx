@@ -15,6 +15,7 @@ import {
   isWinner,
   saveCharts,
   saveGame,
+  saveRandomCount,
 } from '../../services';
 import { Header } from '../Header';
 import { gtm } from '../../services/gtm';
@@ -91,6 +92,7 @@ export const Game = () => {
       gtm.startAppLastGame(lastGame.word.word, lastGame.winner);
       return lastGame.board;
     } else { // first time game or new date
+      saveRandomCount(true);
       gtm.startGame(false);
       return getEmptyBoard(initWord.word.length);
     }
@@ -179,6 +181,7 @@ export const Game = () => {
       setBoard(newBoard);
       !isRandom && saveGame(newBoard, word, todayWord.date, win, newKeyStates); // save game to localStorage
       setCharts(saveCharts(charts, isRandom, win, row)); // save charts to localStorage
+      isRandom && saveRandomCount(); // count new random game
       setWinner(win);
       setGameFinished(true);
       gtm.endGame(isRandom, todayWord.date, word.word, win, newRowNumber);

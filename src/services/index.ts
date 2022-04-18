@@ -187,3 +187,17 @@ export const share = async (text: string, title?: string) => {
     // url: url || process.env.REACT_APP_URL,
   });
 };
+
+export const getRandomCount = () => {
+  return Number(localStorage.getItem('limit')) || 0;
+};
+
+export const saveRandomCount = (reset?: boolean) => {
+  if(reset) {
+    localStorage.setItem('limit', '0');
+  } else {
+    let randomGames = getRandomCount();
+    randomGames += 1;
+    localStorage.setItem('limit', randomGames.toString());
+  }
+};

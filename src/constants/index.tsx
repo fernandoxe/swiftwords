@@ -2,6 +2,8 @@ import { KeyStates } from '../components/Keyboard';
 
 export const ATTEMPTS = 6;
 
+export const RANDOM_LIMIT = 3;
+
 export const EMPTY_KEYSTATES: KeyStates = {
   q: 0,
   w: 0,

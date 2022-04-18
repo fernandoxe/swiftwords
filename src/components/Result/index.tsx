@@ -8,13 +8,14 @@ import { ReactComponent as RepeatIcon } from '../../img/icons/repeat.svg';
 import { ReactComponent as CheckIcon } from '../../img/icons/check.svg';
 import { ReactComponent as NocheckIcon } from '../../img/icons/nocheck.svg';
 import { Fragment, useState } from 'react';
-import { canCopy, canShare, getEmojisBoard, removeEmptyRows, share } from '../../services';
+import { canCopy, canShare, getEmojisBoard, getRandomCount, removeEmptyRows, share } from '../../services';
 import { Snackbar } from '../Snackbar';
 import { Button } from '../Button';
 import { gtm } from '../../services/gtm';
 import { SquareI } from '../Board/Square';
 import { Board } from '../Board';
 import { Twitter } from '../Twitter/Twitter';
+import { RANDOM_LIMIT } from '../../constants';
 
 export interface ResultProps {
   winner: boolean;
@@ -28,6 +29,7 @@ export interface ResultProps {
 
 export const Result = (props: ResultProps) => {
   const [copied, setCopied] = useState(false);
+  const [randomCount] = useState(getRandomCount());
   
   const handleResultClose = () => {
     props.onClose?.();
@@ -174,18 +176,22 @@ export const Result = (props: ResultProps) => {
             </div>
           }
         </div>
-        <div className="text-center mb-4">
+        <div className="text-center">
           <Twitter from="Result" />
         </div>
-        <Button
-          bordered
-          onClick={handleRandomClick}
-        >
-          <span>Try a random {process.env.REACT_APP_TITLE}</span>
-          <div className="w-5 ml-1">
-            <RepeatIcon />
+        {randomCount < RANDOM_LIMIT &&
+          <div className="mt-4">
+            <Button
+              bordered
+              onClick={handleRandomClick}
+            >
+              <span>Try a random {process.env.REACT_APP_TITLE}</span>
+              <div className="w-5 ml-1">
+                <RepeatIcon />
+              </div>
+            </Button>
           </div>
-        </Button>
+        }
       </div>
       {copied &&
         <Snackbar />
