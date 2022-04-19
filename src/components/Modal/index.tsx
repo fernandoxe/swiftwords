@@ -20,7 +20,9 @@ export const Modal:FC<ModalProps> = (props) => {
         <div onClick={(e) => e.stopPropagation()} className="w-[94%] max-w-md rounded-lg p-4 bg-light-background dark:bg-dark-background shadow-md">
           <div className="flex justify-between mb-2">
             <div className="font-bold text-xl">
-              {props.title}
+              <h3>
+                {props.title}
+              </h3>
             </div>
             <button onClick={() => handleClick(true)} className="w-7 [-webkit-tap-highlight-color:transparent] active:scale-90 duration-150 select-none">
               <CloseIcon />

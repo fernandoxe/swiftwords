@@ -54,7 +54,9 @@ export const Header = (props: HeaderProps) => {
     <>
       <div className="flex p-4 select-none">
         <div className="text-2xl grow flex items-center leading-none font-bold">
-          {process.env.REACT_APP_TITLE}
+          <h1>
+            {process.env.REACT_APP_TITLE}
+          </h1>
         </div>
         {props.showResultButton &&
           <button
