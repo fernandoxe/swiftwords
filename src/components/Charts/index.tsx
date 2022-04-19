@@ -29,7 +29,7 @@ export const Charts = (props: ChartsProps) => {
     let text = '';
     text += `${getTitle()}\n\n`;
     text += `Total games: ${props.total}\n`;
-    text += `Swiftdle: ${props.normal}\n`;
+    text += `${process.env.REACT_APP_TITLE}: ${props.normal}\n`;
     text += `Random: ${props.random}\n\n`;
     text += `Current streak: ${props.currentStreak}\n`;
     text += `Best streak: ${props.bestStreak}\n`;
