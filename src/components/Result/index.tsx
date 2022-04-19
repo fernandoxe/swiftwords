@@ -185,7 +185,7 @@ export const Result = (props: ResultProps) => {
               bordered
               onClick={handleRandomClick}
             >
-              <span>Try a random {process.env.REACT_APP_TITLE}</span>
+              <span>Play a random {process.env.REACT_APP_TITLE}</span>
               <div className="w-5 ml-1">
                 <RepeatIcon />
               </div>
