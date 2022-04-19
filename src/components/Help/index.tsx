@@ -1,72 +1,7 @@
 import { Modal } from '../Modal';
 import { Row } from '../Board/Row';
 import { Twitter } from '../Twitter/Twitter';
-
-const firstExample = [
-  {
-    char: 't',
-    guessed: 2,
-    border: false,
-  },
-  {
-    char: 'u',
-    guessed: -1,
-    border: false,
-  },
-  {
-    char: 'r',
-    guessed: 1,
-    border: false,
-  },
-  {
-    char: 'n',
-    guessed: -1,
-    border: false,
-  },
-  {
-    char: 'e',
-    guessed: -1,
-    border: false,
-  },
-  {
-    char: 'd',
-    guessed: -1,
-    border: false,
-  },
-];
-
-const secondExample = [
-  {
-    char: 't',
-    guessed: 2,
-    border: false,
-  },
-  {
-    char: 'a',
-    guessed: 2,
-    border: false,
-  },
-  {
-    char: 'y',
-    guessed: 2,
-    border: false,
-  },
-  {
-    char: 'l',
-    guessed: 2,
-    border: false,
-  },
-  {
-    char: 'o',
-    guessed: 2,
-    border: false,
-  },
-  {
-    char: 'r',
-    guessed: 2,
-    border: false,
-  },
-];
+import { firstExample, secondExample, guessedLetter, almostLetter } from '../../.config';
 
 export interface HelpProps {
   onClose: () => void;
@@ -95,10 +30,10 @@ export const Help = (props: HelpProps) => {
         </div>
         <ul className="list-disc list-inside mb-2">
           <li>
-            <strong>T</strong> is in the word at the correct spot
+            <strong>{guessedLetter}</strong> is in the word at the correct spot
           </li>
           <li>
-            <strong>R</strong> is in the word but in the wrong spot
+            <strong>{almostLetter}</strong> is in the word but in the wrong spot
           </li>
           <li>
             The rest of letters are not in the word
@@ -109,6 +44,9 @@ export const Help = (props: HelpProps) => {
         </div>
         <div className="mb-3">
           <Row row={secondExample} />
+        </div>
+        <div className="text-center mb-2">
+          A new {process.env.REACT_APP_TITLE} will be available every day
         </div>
         <div className="text-center">
           <Twitter from="Help" />
