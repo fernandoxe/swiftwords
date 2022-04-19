@@ -34,7 +34,7 @@ export const Settings = () => {
         </div>
         <div className="ml-4">
           <div className="font-bold">
-            Reputation mood
+            {process.env.REACT_APP_DARK_TEXT}
           </div>
           <div className="text-sm">
             Dark theme
@@ -47,7 +47,7 @@ export const Settings = () => {
         </div>
         <div className="ml-4">
           <div className="font-bold">
-            Screaming color
+            {process.env.REACT_APP_COLOR_TEXT}
           </div>
           <div className="text-sm">
             For color blindness
