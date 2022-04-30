@@ -97,7 +97,7 @@ export const getTodayWord = async () => {
     return data;
   } catch (error: any) {
     console.log(`Error in fetch Today. ${error.message}`);
-    gtm.getRandomWordError(error.message);
+    gtm.getTodayWordError(error.message);
     return {};
   }
 };
