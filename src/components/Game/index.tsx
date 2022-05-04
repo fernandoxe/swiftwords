@@ -36,7 +36,7 @@ export interface TodayWord {
 }
 
 export const Game = () => {
-  console.log('render game');
+  // console.log('render game');
 
   const [todayWord, setTodayWord] = useState({word: {word: '', line: '', song: '', album: ''}, date: ''});
   const [word, setWord] = useState(todayWord.word);
