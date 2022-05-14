@@ -62,6 +62,7 @@ export const Header = (props: HeaderProps) => {
           <button
             className="w-7 active:scale-90 duration-150"
             onClick={handleResultClick}
+            aria-label="Show result"
           >
             <ResultIcon />
           </button>
@@ -70,6 +71,7 @@ export const Header = (props: HeaderProps) => {
           <button
             className="ml-2 w-7 active:scale-90 duration-150"
             onClick={handleChartClick}
+            aria-label="Show statistics"
           >
             <ChartIcon />
           </button>
@@ -77,12 +79,14 @@ export const Header = (props: HeaderProps) => {
         <button
           className="ml-2 w-7 active:scale-90 duration-150"
           onClick={handleHelpClick}
+          aria-label="Show help"
         >
           <HelpIcon />
         </button>
         <button
           className="ml-2 w-7 active:scale-90 duration-150"
           onClick={handleSettingsClick}
+          aria-label="Show settings"
         >
           <SettingsIcon />
         </button>

@@ -119,6 +119,7 @@ export const Charts = (props: ChartsProps) => {
             <div>
               <Button
                 onClick={handleShareClick}
+                aria-label="Share"
               >
                 <span>Share</span>
                 <div className="w-5 ml-1">
@@ -131,6 +132,7 @@ export const Charts = (props: ChartsProps) => {
             <div className="ml-2">
               <Button
                 onClick={handleCopyClick}
+                aria-label="Copy"
               >
                 <span>Copy</span>
                 <div className="w-5 ml-1">

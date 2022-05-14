@@ -153,7 +153,10 @@ export const Result = (props: ResultProps) => {
             <div className="flex flex-col items-center justify-center ml-4">
               {canShare() &&
                 <div className="mb-3">
-                  <Button onClick={handleShareClick}>
+                  <Button
+                    onClick={handleShareClick}
+                    aria-label="Share"
+                  >
                     <span>Share</span>
                     <div className="w-5 ml-1">
                       <ShareIcon />
@@ -165,6 +168,7 @@ export const Result = (props: ResultProps) => {
                 <div>
                   <Button
                     onClick={handleCopyClick}
+                    aria-label="Copy"
                   >
                     <span>Copy</span>
                     <div className="w-5 ml-1">
@@ -184,6 +188,7 @@ export const Result = (props: ResultProps) => {
             <Button
               bordered
               onClick={handleRandomClick}
+              aria-label={`Play a random ${process.env.REACT_APP_TITLE}`}
             >
               <span>Play a random {process.env.REACT_APP_TITLE}</span>
               <div className="w-5 ml-1">

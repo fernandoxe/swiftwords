@@ -38,6 +38,7 @@ export const Key = (props: KeyProps) => {
       className={`flex grow items-center justify-center basis-0 h-12 max-w-[3rem] m-1 uppercase border ${additionalProps} [-webkit-tap-highlight-color:transparent] overflow-hidden shadow-md ${disabled} select-none`}
       disabled={props.disabled}
       onClick={props.onClick}
+      aria-label={`${props.char} key`}
     >
       {props.char === 'enter' &&
         <div className={`w-6 ${largeDisabled}`}>

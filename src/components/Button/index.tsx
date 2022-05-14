@@ -3,6 +3,7 @@ import { FC } from 'react';
 export interface ButtonProps {
   bordered?: boolean;
   onClick?: () => void;
+  'aria-label'?: string;
 }
 
 export const Button: FC<ButtonProps> = (props) => {
@@ -18,6 +19,7 @@ export const Button: FC<ButtonProps> = (props) => {
     <button
       className={`flex items-center ${border} shadow-md active:scale-90 duration-150 select-none rounded`}
       onClick={handleClick}
+      aria-label={props['aria-label']}
     >
       {props.children}
     </button>

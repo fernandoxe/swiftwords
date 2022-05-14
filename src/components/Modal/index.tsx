@@ -24,7 +24,7 @@ export const Modal:FC<ModalProps> = (props) => {
                 {props.title}
               </h3>
             </div>
-            <button onClick={() => handleClick(true)} className="w-7 [-webkit-tap-highlight-color:transparent] active:scale-90 duration-150 select-none">
+            <button onClick={() => handleClick(true)} aria-label="Close" className="w-7 [-webkit-tap-highlight-color:transparent] active:scale-90 duration-150 select-none">
               <CloseIcon />
             </button>
           </div>
