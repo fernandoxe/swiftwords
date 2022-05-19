@@ -18,6 +18,12 @@ const startGame = (random: boolean) => {
   );
 };
 
+const startPlay = (random: boolean) => {
+  event(`Start play${random ? ' random' : ''} game`,
+    `Start play${random ? ' random' : ''} game`,
+  );
+};
+
 const startAppLastGame = (word: string, winner: boolean) => {
   event('Start app last game',
     `${word} | ${winner}`,
@@ -137,6 +143,7 @@ const openTwitter = (from: string) => {
 
 export const gtm = {
   startGame,
+  startPlay,
   startAppLastGame,
   endGame,
   sendRow,

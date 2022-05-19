@@ -53,6 +53,7 @@ export const Game = () => {
   const [isRandom, setIsRandom] = useState(false);
   const [charts, setCharts] = useState(getCharts);
   const [board, setBoard] = useState([[{char: '', guessed: 0}]]);
+  const [startPlay, setStartPlay] = useState(false);
 
   useEffect(() => {
     const fetchWord = async () => {
@@ -77,6 +78,7 @@ export const Game = () => {
     setKeyStates(EMPTY_KEYSTATES);
     setShowResult(false);
     setGameFinished(false);
+    setStartPlay(false);
   };
 
   const getInitBoard = (initWord: Word, date: string) => {
@@ -108,6 +110,10 @@ export const Game = () => {
   };
   
   const handleKeyClick = (char: string) => {
+    if(!startPlay) {
+      gtm.startPlay(isRandom);
+      setStartPlay(true);
+    }
     if(square === word.word.length || row === rows) { // leave when row or board is full
       return;
     }
