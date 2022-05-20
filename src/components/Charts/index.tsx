@@ -5,6 +5,7 @@ import { ReactComponent as CopyIcon } from '../../img/icons/copy.svg';
 import { gtm } from '../../services/gtm';
 import { useState } from 'react';
 import { Snackbar } from '../Snackbar';
+import { captureException } from '@sentry/react';
 
 export interface ChartsProps {
   total: number;
@@ -46,6 +47,7 @@ export const Charts = (props: ChartsProps) => {
       console.log('Share charts successful');
     } catch (error: any) {
       gtm.shareError('charts', error.message);
+      captureException(error);
       console.log('Share charts error', error.message);
     }
   };
@@ -61,6 +63,7 @@ export const Charts = (props: ChartsProps) => {
       console.log('Copy charts successful');
     } catch (error: any) {
       gtm.copyError(error.message);
+      captureException(error);
       console.log('Copy charts error', error.message);
     }
   };

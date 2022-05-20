@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/react';
 import { keyState, SquareI } from '../components/Board/Square';
 import { ChartsProps } from '../components/Charts';
 import { Word } from '../components/Game';
@@ -83,6 +84,7 @@ export const getRandomWord = async () => {
   } catch(error: any) {
     console.log(`Error in fetch Random. ${error.message}`);
     gtm.getRandomWordError(error.message);
+    captureException(error);
     return {};
   }
 };
@@ -98,6 +100,7 @@ export const getTodayWord = async () => {
   } catch (error: any) {
     console.log(`Error in fetch Today. ${error.message}`);
     gtm.getTodayWordError(error.message);
+    captureException(error);
     return {};
   }
 };
@@ -123,6 +126,7 @@ export const getFromLocalStorage = (key: string) => {
     const value = JSON.parse(savedValue);
     return value;
   } catch (error: any) {
+    captureException(error);
     return {};
   }
 };
