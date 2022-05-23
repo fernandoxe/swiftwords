@@ -82,8 +82,8 @@ export const Result = (props: ResultProps) => {
       console.log('Share result successful');
     } catch (error: any) {
       gtm.shareError('result', error.message);
-      captureException(error);
       console.log('Share result error', error.message);
+      captureException(error);
     }
   };
 
@@ -98,8 +98,8 @@ export const Result = (props: ResultProps) => {
       console.log('Copy result successful');
     } catch (error: any) {
       gtm.copyError(error.message);
-      captureException(error);
       console.log('Copy result error', error.message);
+      captureException(error);
     }
   };
 

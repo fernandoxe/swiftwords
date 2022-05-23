@@ -47,8 +47,8 @@ export const Charts = (props: ChartsProps) => {
       console.log('Share charts successful');
     } catch (error: any) {
       gtm.shareError('charts', error.message);
-      captureException(error);
       console.log('Share charts error', error.message);
+      captureException(error);
     }
   };
 
@@ -63,8 +63,8 @@ export const Charts = (props: ChartsProps) => {
       console.log('Copy charts successful');
     } catch (error: any) {
       gtm.copyError(error.message);
-      captureException(error);
       console.log('Copy charts error', error.message);
+      captureException(error);
     }
   };
 
