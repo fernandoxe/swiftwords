@@ -1,3 +1,5 @@
+import { captureException } from '@sentry/react';
+
 export const serviceWorkerRegister = () => {
   if('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -9,6 +11,7 @@ export const serviceWorkerRegister = () => {
         })
         .catch(error => {
           console.error('Error during service worker registration:', error);
+          captureException(error);
         });
     });
   }
