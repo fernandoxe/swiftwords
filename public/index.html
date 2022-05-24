@@ -71,10 +71,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <title>%REACT_APP_TITLE%</title>
+    <style>
+      .splash {
+        font-family: Nunito, Arial, sans-serif;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #f3f4f6;
+        color: #262626;
+      }
+      .dark .splash {
+        background-color: %REACT_APP_THEME_COLOR%;
+        color: #d4d4d4;
+      }
+      .splash-content {
+        margin: 0.5rem;
+        margin-bottom: 1rem;
+        line-height: 1;
+        font-weight: 700;
+        display: flex;
+      }
+      .splash-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .splash-title {
+        font-size: 1.75rem;
+        margin: 0;
+      }
+      .splash-subtitle {
+        font-size: 0.75rem;
+        margin: 0;
+      }
+      .splash-space {
+        flex-grow: 1;
+      }
+    </style>
   </head>
   <body class="bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text leading-5 font-primary">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div class="splash">
+      <div class="splash-content">
+        <div class="splash-text">
+          <h1 class="splash-title">%REACT_APP_TITLE%</h1>
+          <h2 class="splash-subtitle">%REACT_APP_SUBTITLE%</h2>
+        </div>
+        <div class="splash-space"></div>
+      </div>
+    </div>
+    <div id="root">
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
