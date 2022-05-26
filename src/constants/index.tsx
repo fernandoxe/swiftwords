@@ -4,6 +4,8 @@ export const ATTEMPTS = 6;
 
 export const RANDOM_LIMIT = 3;
 
+export const TIMEOUT = 10000;
+
 export const EMPTY_KEYSTATES: KeyStates = {
   q: 0,
   w: 0,

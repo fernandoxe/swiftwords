@@ -3,7 +3,7 @@ import { keyState, SquareI } from '../components/Board/Square';
 import { ChartsProps } from '../components/Charts';
 import { Word } from '../components/Game';
 import { KeyStates } from '../components/Keyboard';
-import { ATTEMPTS } from '../constants';
+import { ATTEMPTS, TIMEOUT } from '../constants';
 import { gtm } from './gtm';
 
 export const getEmptyBoard = (wordLength: number) => {
@@ -75,7 +75,10 @@ export const getEmojisBoard = (board: SquareI[][]) => {
 
 export const getRandomWord = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}?random=1`);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), TIMEOUT);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}?random=1`, { signal: controller.signal });
+    clearTimeout(timeout);
     if(!response.ok) {
       throw Error(`Status ${response.status}`);
     };
@@ -91,7 +94,10 @@ export const getRandomWord = async () => {
 
 export const getTodayWord = async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}`);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), TIMEOUT);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}`, { signal: controller.signal });
+    clearTimeout(timeout);
     if(!response.ok) {
       throw Error(`Status ${response.status}`);
     };
