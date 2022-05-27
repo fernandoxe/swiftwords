@@ -15,6 +15,8 @@ Sentry.init({
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
+  environment: process.env.NODE_ENV,
+  release: process.env.REACT_APP_VERSION,
 });
 
 ReactDOM.render(
