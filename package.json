@@ -26,7 +26,8 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "release": "standard-version --skip.changelog",
-    "postrelease": "npm run sentry-release && npm run sentry-release",
+    "postrelease": "npm run build-sm && npm run sentry",
+    "sentry": "npm run sentry-release && npm run sentry-sm",
     "sentry-release": "sentry-cli releases new %npm_package_version% --finalize",
     "sentry-sm": "sentry-cli releases files %npm_package_version% upload-sourcemaps ./build"
   },
