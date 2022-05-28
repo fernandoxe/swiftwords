@@ -20,11 +20,15 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "build-sm": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "release": "standard-version --skip.changelog"
+    "release": "standard-version --skip.changelog",
+    "postrelease": "npm run sentry-release && npm run sentry-release",
+    "sentry-release": "sentry-cli releases new %npm_package_version% --finalize",
+    "sentry-sm": "sentry-cli releases files %npm_package_version% upload-sourcemaps ./build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +51,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.1",
     "@commitlint/config-conventional": "^17.0.0",
+    "@sentry/cli": "^2.1.0",
     "@types/gtag.js": "0.0.10",
     "autoprefixer": "^10.4.2",
     "husky": "^8.0.1",
