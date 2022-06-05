@@ -14,9 +14,9 @@ import { Button } from '../Button';
 import { gtm } from '../../services/gtm';
 import { SquareI } from '../Board/Square';
 import { Board } from '../Board';
-import { Twitter } from '../Twitter/Twitter';
 import { RANDOM_LIMIT } from '../../constants';
 import { captureException } from '@sentry/react';
+import { Referred } from '../Referred';
 
 export interface ResultProps {
   winner: boolean;
@@ -184,8 +184,11 @@ export const Result = (props: ResultProps) => {
           }
         </div>
         <div className="text-center">
-          <Twitter from="Result" />
+          <Referred from="Result" />
         </div>
+        {/* <div className="text-center">
+          <Twitter from="Result" />
+        </div> */}
         {randomCount < RANDOM_LIMIT &&
           <div className="mt-4">
             <Button

@@ -141,6 +141,12 @@ const openTwitter = (from: string) => {
   );
 };
 
+const openReferred = (from: string) => {
+  event(`Open Referred`,
+    `${from}`
+  );
+};
+
 export const gtm = {
   startGame,
   startPlay,
@@ -161,5 +167,6 @@ export const gtm = {
   playRandom,
   getTodayWordError,
   getRandomWordError,
-  openTwitter
+  openTwitter,
+  openReferred,
 };
