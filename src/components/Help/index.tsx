@@ -1,6 +1,6 @@
 import { Modal } from '../Modal';
 import { Row } from '../Board/Row';
-import { Twitter } from '../Twitter/Twitter';
+import { Twitter } from '../Twitter';
 import { firstExample, secondExample, guessedLetter, almostLetter } from '../../.config';
 
 export interface HelpProps {

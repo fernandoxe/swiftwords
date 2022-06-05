@@ -18,8 +18,6 @@ export const Twitter = (props: TwitterProps) => {
       </div>
       <a
         className="align-middle text-light-primary-600 dark:text-dark-primary-500"
-        target="_blank"
-        rel="noopener noreferrer"
         href={`https://twitter.com/${process.env.REACT_APP_TWITTER}`}
         onClick={handleLinkClick}
       >
