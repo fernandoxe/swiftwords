@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { Context } from '../../context';
+import { gtm } from '../../services/gtm';
 import { Switch } from '../Switch';
 
 export const Settings = () => {
@@ -13,10 +14,12 @@ export const Settings = () => {
       localStorage.setItem('theme', 'dark');
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      gtm.setTheme('dark', highContrastValue);
     } else {
       localStorage.setItem('theme', 'light');
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
+      gtm.setTheme('light', highContrastValue);
     }
   };
 
@@ -24,6 +27,7 @@ export const Settings = () => {
     setHighContrastValue(highContrast);
     setState({highContrast});
     localStorage.setItem('highContrast', highContrast ? '1' : '0');
+    gtm.setHighContrast(highContrast, darkValue ? 'dark' : 'light');
   };
 
   return (

@@ -69,6 +69,12 @@ const clickHelp = () => {
   );
 };
 
+const clickSettings = () => {
+  event('Click settings',
+    'Click settings'
+  );
+};
+
 const closeModal = (x: boolean) => {
   event('Click Close',
     `Click ${x ? 'X' : 'outside'}`
@@ -147,6 +153,18 @@ const openReferred = (from: string) => {
   );
 };
 
+const setTheme = (theme: string, highContrast: boolean) => {
+  event(`Set theme ${theme} ${highContrast ? '' : 'not '}high contrast`,
+    `${highContrast}`
+  );
+};
+
+const setHighContrast = (highContrast: boolean, theme: string) => {
+  event(`Set theme ${highContrast ? '' : 'not '}high contrast ${theme}`,
+    `${theme}`
+  );
+};
+
 export const gtm = {
   startGame,
   startPlay,
@@ -157,6 +175,7 @@ export const gtm = {
   clickResult,
   clickChart,
   clickHelp,
+  clickSettings,
   closeModal,
   canShareError,
   canCopyError,
@@ -169,4 +188,6 @@ export const gtm = {
   getRandomWordError,
   openTwitter,
   openReferred,
+  setTheme,
+  setHighContrast,
 };
