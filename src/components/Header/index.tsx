@@ -35,6 +35,7 @@ export const Header = (props: HeaderProps) => {
   };
 
   const handleSettingsClick = () => {
+    gtm.clickSettings();
     setShowSettings(true);
   };
 
