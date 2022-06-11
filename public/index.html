@@ -9,31 +9,31 @@
       gtag('js', new Date());
 
       gtag('config', '%REACT_APP_GTM_ID%');
-
-      window.onerror = (message) => {
-        console.log('onerror:', message);
-        gtag('send', 'exception', {
-          'exDescription': message,
-          'exFatal': false,
-        });
-        gtag('event', 'Global', {
-          'event_category' : 'Error',
-          'event_label' : message,
-          'non_interaction': true,
-        });
-      };
     </script>
     <script>
       var theme = window.localStorage.getItem('theme');
       if(theme === 'dark' || theme === 'light') {
         document.documentElement.classList.add(theme);
       } else if(window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
-        window.localStorage.setItem('theme', 'dark');
+        theme = 'dark';
+        document.documentElement.classList.add(theme);
+        window.localStorage.setItem('theme', theme);
       } else {
-        document.documentElement.classList.add('light');
-        window.localStorage.setItem('theme', 'light');
+        theme = 'light';
+        document.documentElement.classList.add(theme);
+        window.localStorage.setItem('theme', theme);
       }
+      
+      var highContrast = !!Number(window.localStorage.getItem('highContrast'));
+      gtag(
+        'event',
+        'Init theme ' + theme + (highContrast ? '' : ' not') + ' high contrast',
+        {
+          event_category: '%REACT_APP_TITLE%',
+          event_label: theme + ' ' + highContrast,
+          non_interaction: true,
+        }
+      );
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
