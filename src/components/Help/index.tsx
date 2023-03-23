@@ -45,11 +45,8 @@ export const Help = (props: HelpProps) => {
         <div className="mb-3">
           <Row row={secondExample} />
         </div>
-        <div className="text-center mb-2">
-          A new {process.env.REACT_APP_TITLE} will be available every day
-        </div>
         <div className="text-center">
-          <Twitter from="Help" />
+          A new {process.env.REACT_APP_TITLE} will be available every day
         </div>
       </div>
     </Modal>
